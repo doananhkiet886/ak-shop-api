@@ -1,6 +1,14 @@
 module.exports = {
   NODE_ENV_PRODUCTION: 'production',
   NODE_ENV_DEVELOPMENT: 'development',
-  MONGODB_URI_DEFAULT: 'mongodb://localhost:27017/ak-shop',
-  PORT_DEFAULT: 3055
+  DEV_APP_HOST_DEFAULT: 'localhost',
+  DEV_APP_PORT_DEFAULT: 3055,
+  DEV_DB_HOST_DEFAULT: 'localhost',
+  DEV_DB_PORT_DEFAULT: 27017,
+  DEV_DB_NAME_DEFAULT: 'ak-shop',
+  PROD_APP_HOST_DEFAULT: 'localhost',
+  PROD_APP_PORT_DEFAULT: 3055,
+  PROD_DB_HOST_DEFAULT: 'localhost',
+  PROD_DB_PORT_DEFAULT: 27017,
+  PROD_DB_NAME_DEFAULT: 'ak-shop'
 }

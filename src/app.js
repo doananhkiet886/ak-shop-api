@@ -1,17 +1,16 @@
 'use strict'
 
-require('dotenv').config()
 const express = require('express')
 const { default: helmet } = require('helmet')
 const compression = require('compression')
 const morgan = require('morgan')
-const db = require('./dbs')
+const database = require('./configs/database.config')
 const router = require('./routes')
 
 const app = express()
 
 // init db
-db.connect()
+database.connect()
 
 // init middlewares
 app.use(express.urlencoded({ extended: true }))

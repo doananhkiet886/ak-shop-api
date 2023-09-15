@@ -10,7 +10,6 @@ router.use('/api', v1Router)
 
 router.use((req, res, next) => {
   const error = new NotFoundError()
-  console.log('BUG::', error)
   next(error)
 })
 
