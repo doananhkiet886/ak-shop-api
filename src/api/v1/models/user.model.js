@@ -7,32 +7,39 @@ const userSchema = new Schema({
   lastName: {
     type: String,
     maxLength: 50,
-    required: true
+    required: true,
+    index: true
   },
   firstName: {
     type: String,
     maxLength: 30,
-    required: true
+    required: true,
+    index: true
   },
   gender: {
     type: String,
-    enum: ['male', 'female']
+    enum: ['male', 'female', null],
+    default: null
   },
   dateOfBirth: {
-    type: Date
+    type: Date,
+    default: null
   },
   address: {
     type: String,
-    maxLength: 200
+    maxLength: 200,
+    default: null
   },
   phoneNumber: {
     type: String,
     minLength: 10,
-    maxLength: 11
+    maxLength: 11,
+    default: null
   },
   email: {
     type: String,
-    maxLength: 50
+    maxLength: 50,
+    default: null
   },
   account: {
     username: {
