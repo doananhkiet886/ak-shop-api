@@ -24,7 +24,7 @@ app.use(morgan('dev'))
 app.use(router)
 
 // handling error
-app.use((error, req, res, next) => {
+app.use((error, req, res) => {
   const { statusCode, message } = error
   res.json({
     status: 'error',

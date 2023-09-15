@@ -27,7 +27,7 @@ class AccessService {
   }) {
     const user = await userService.findByUsername(username)
     if (user) throw new ConflictError('User already exists')
-    console.log('PASSED:::')
+
     const passwordHash = await bcrypt.hash(password, 10)
 
     const newUser = await userService.createUser({
@@ -60,7 +60,7 @@ class AccessService {
     })
 
     return {
-      user: getDataInfo(newUser, ['_id', 'lastName', 'firstName', username]),
+      user: getDataInfo(newUser, ['_id', 'lastName', 'firstName', 'username']),
       tokens: {
         accessToken,
         refreshToken: newKeyToken.refreshToken
