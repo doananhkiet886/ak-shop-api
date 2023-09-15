@@ -1,6 +1,6 @@
 'use strict'
 
-const { StatusCodes, ReasonPhrases } = require('../core/httpStatusCode')
+const { StatusCodes, ReasonPhrases } = require('./httpStatusCode')
 
 class MyError extends Error {
   constructor(message, statusCode) {
@@ -51,11 +51,18 @@ class ConflictError extends MyError {
   }
 }
 
+class InternalServerError extends MyError {
+  constructor(message = ReasonPhrases.INTERNAL_SERVER_ERROR, statusCode = StatusCodes.INTERNAL_SERVER_ERROR) {
+    super(message, statusCode)
+  }
+}
+
 module.exports = {
   MyError,
   NotFoundError,
   BadRequestError,
   ForbiddenError,
   UnAuthorizedError,
-  ConflictError
+  ConflictError,
+  InternalServerError
 }

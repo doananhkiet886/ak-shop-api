@@ -26,7 +26,7 @@ app.use(router)
 // handling error
 app.use((error, req, res, next) => {
   const { statusCode, message } = error
-  res.status(statusCode).json({
+  res.json({
     status: 'error',
     code: statusCode,
     message
