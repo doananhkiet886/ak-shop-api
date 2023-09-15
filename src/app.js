@@ -27,7 +27,7 @@ app.use(router)
 app.use((error, req, res, next) => {
   const { statusCode, message } = error
   res.status(statusCode).json({
-    status: 'error',
+    status: 'Error',
     code: statusCode,
     message
   })
