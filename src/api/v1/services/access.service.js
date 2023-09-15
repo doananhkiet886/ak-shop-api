@@ -60,7 +60,7 @@ class AccessService {
     })
 
     return {
-      user: getDataInfo(newUser, ['_id', 'lastName', 'firstName', 'username']),
+      user: getDataInfo(newUser, ['_id', 'lastName', 'firstName', 'account.username']),
       tokens: {
         accessToken,
         refreshToken: newKeyToken.refreshToken
