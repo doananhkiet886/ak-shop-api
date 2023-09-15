@@ -24,7 +24,8 @@ app.use(morgan('dev'))
 app.use(router)
 
 // handling error
-app.use((error, req, res) => {
+// eslint-disable-next-line no-unused-vars
+app.use((error, req, res, next) => {
   const { statusCode, message } = error
   res.json({
     status: 'error',
