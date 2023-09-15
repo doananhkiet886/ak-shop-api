@@ -27,7 +27,7 @@ app.use(router)
 // eslint-disable-next-line no-unused-vars
 app.use((error, req, res, next) => {
   const { statusCode, message } = error
-  res.json({
+  res.status(statusCode).json({
     status: 'error',
     code: statusCode,
     message
