@@ -46,13 +46,19 @@ class UnAuthorizedError extends MyError {
 }
 
 class ConflictError extends MyError {
-  constructor(message = ReasonPhrases.CONFLICT, statusCode = StatusCodes.CONFLICT) {
+  constructor(
+    message = ReasonPhrases.CONFLICT,
+    statusCode = StatusCodes.CONFLICT
+  ) {
     super(message, statusCode)
   }
 }
 
 class InternalServerError extends MyError {
-  constructor(message = ReasonPhrases.INTERNAL_SERVER_ERROR, statusCode = StatusCodes.INTERNAL_SERVER_ERROR) {
+  constructor(
+    message = ReasonPhrases.INTERNAL_SERVER_ERROR,
+    statusCode = StatusCodes.INTERNAL_SERVER_ERROR
+  ) {
     super(message, statusCode)
   }
 }

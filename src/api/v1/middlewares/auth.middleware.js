@@ -1,7 +1,7 @@
 'use strict'
 
 const apiKeyService = require('../services/apiKey.service')
-const { ForbiddenError } = require('../../../core/errorResponse')
+const { ForbiddenError, UnAuthorizedError } = require('../../../core/errorResponse')
 
 const HEADERS = {
   API_KEY: 'x-api-key'
@@ -17,6 +17,18 @@ class AuthMiddleware {
 
     req.apiKeyObj = apiKeyObj
     next()
+  }
+
+  checkPermission(permission = '') {
+    return async (req, res, next) => {
+      const { permissions } = req.apiKeyObj
+      if (!permission) throw new UnAuthorizedError()
+
+      const isValidPermission = permissions.includes(permission)
+      if (!isValidPermission) throw new UnAuthorizedError()
+
+      next()
+    }
   }
 }
 
