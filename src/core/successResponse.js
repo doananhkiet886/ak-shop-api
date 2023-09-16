@@ -25,13 +25,20 @@ class OkResponse extends SuccessResponse {
 }
 
 class CreatedResponse extends SuccessResponse {
-  constructor({ message = ReasonPhrases.CREATED, metadata =StatusCodes.CREATED }) {
-    super({ message, metadata })
+  constructor({ message = ReasonPhrases.CREATED, statusCode = StatusCodes.CREATED, metadata }) {
+    super({ message, statusCode, metadata })
+  }
+}
+
+class ResetContentResponse extends SuccessResponse {
+  constructor({ message = ReasonPhrases.RESET_CONTENT, statusCode = StatusCodes.RESET_CONTENT, metadata }) {
+    super({ message, statusCode, metadata })
   }
 }
 
 module.exports = {
   SuccessResponse,
   OkResponse,
-  CreatedResponse
+  CreatedResponse,
+  ResetContentResponse
 }

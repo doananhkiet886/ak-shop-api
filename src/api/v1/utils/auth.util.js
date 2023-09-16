@@ -31,7 +31,12 @@ const createTokenPair = ({ payload = { userId: '', username: '' }, privateKey, a
   return { accessToken, refreshToken }
 }
 
+const verifyToken = ({ token, secretOrPublicKey }) => {
+  return jwt.verify(token, secretOrPublicKey)
+}
+
 module.exports = {
   createKeyPairRsa,
-  createTokenPair
+  createTokenPair,
+  verifyToken
 }

@@ -6,7 +6,8 @@ const keyTokenService = require('./keyToken.service')
 const {
   ConflictError,
   InternalServerError,
-  UnAuthorizedError
+  UnAuthorizedError,
+  MyError
 } = require('../../../core/errorResponse')
 const { createKeyPairRsa, createTokenPair } = require('../utils/auth.util')
 const getDataInfo = require('../utils/getDataInfo.util')
@@ -77,7 +78,7 @@ class AccessService {
    * 5 - save RT in db
    * 6 - return AT, RT, userId, username, lastName, firstName
    */
-  async signIn({ username, password }) {
+  async signIn({ username = '', password = '' }) {
     const foundUser = await userService.findByUsername(username)
     if (!foundUser) throw new UnAuthorizedError()
 
@@ -133,6 +134,16 @@ class AccessService {
         refreshToken
       }
     }
+  }
+
+  async signOut({ keyToken = {} }) {
+    const hasIdProperty = keyToken?._id
+    if (!hasIdProperty) throw new MyError('Invalid parameter in accessService.signOut function', 500)
+
+    const { acknowledged } = await keyTokenService.deleteById(keyToken._id)
+    if (!acknowledged) throw new InternalServerError('Sign out failure')
+
+    return {}
   }
 }
 
