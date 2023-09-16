@@ -12,6 +12,17 @@ class KeyTokenService {
       refreshToken
     })
   }
+
+  async findByUserId(userId = '') {
+    return await keyTokenModel.findOne({ userId }).lean()
+  }
+
+  async updateKeyToken({
+    filter = {},
+    update = {}
+  }) {
+    return await keyTokenModel.updateOne(filter, update)
+  }
 }
 
 module.exports = new KeyTokenService()
