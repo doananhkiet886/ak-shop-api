@@ -4,11 +4,11 @@ const { CreatedResponse, SuccessResponse } = require('../../../core/successRespo
 const accessService = require('../services/access.service')
 
 class AccessController {
-  // [POST] /api/v1/signup
-  async signup(req, res) {
+  // [POST] /api/v1/sign-up
+  async signUp(req, res) {
     new CreatedResponse({
-      message: 'Signup successfully',
-      metadata: await accessService.signup(req.body)
+      message: 'Sign up successfully',
+      metadata: await accessService.signUp(req.body)
     }).send(res)
   }
 

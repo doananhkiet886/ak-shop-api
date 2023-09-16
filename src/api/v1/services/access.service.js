@@ -15,7 +15,7 @@ const ACCESS_TOKEN_EXPIRES_IN = '7 days'
 const REFRESH_TOKEN_EXPIRES_IN = '14 days'
 
 class AccessService {
-  async signup({
+  async signUp({
     lastName,
     firstName,
     gender,
@@ -28,7 +28,6 @@ class AccessService {
   }) {
     const user = await userService.findByUsername(username)
     if (user) throw new ConflictError('User already exists')
-
     const passwordHash = await bcrypt.hash(password, 10)
 
     const newUser = await userService.createUser({
