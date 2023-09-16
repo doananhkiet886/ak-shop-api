@@ -59,6 +59,7 @@ class AccessService {
       privateKey,
       refreshToken
     })
+    if (!newKeyToken) throw new InternalServerError()
 
     return {
       user: getDataInfo(newUser, ['_id', 'lastName', 'firstName', 'account.username']),
