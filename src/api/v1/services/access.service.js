@@ -12,8 +12,12 @@ const {
 const { createKeyPairRsa, createTokenPair } = require('../utils/auth.util')
 const getDataInfo = require('../utils/getDataInfo.util')
 
-const ACCESS_TOKEN_EXPIRES_IN = '7 days'
+const ACCESS_TOKEN_EXPIRES_IN = '1h'
 const REFRESH_TOKEN_EXPIRES_IN = '14 days'
+
+const {
+  auth: { accessTokenLife, refreshTokenLife }
+} = require('../../../configs/environment.config')
 
 class AccessService {
   async signUp({
@@ -49,8 +53,8 @@ class AccessService {
     const { accessToken, refreshToken } = createTokenPair({
       payload,
       privateKey,
-      accessTokenExpiresIn: ACCESS_TOKEN_EXPIRES_IN,
-      refreshTokenExpiresIn: REFRESH_TOKEN_EXPIRES_IN
+      accessTokenExpiresIn: accessTokenLife,
+      refreshTokenExpiresIn: refreshTokenLife
     })
 
     const newKeyToken = await keyTokenService.createKeyToken({
@@ -93,8 +97,8 @@ class AccessService {
       const { accessToken, refreshToken } = createTokenPair({
         payload,
         privateKey,
-        accessTokenExpiresIn: ACCESS_TOKEN_EXPIRES_IN,
-        refreshTokenExpiresIn: REFRESH_TOKEN_EXPIRES_IN
+        accessTokenExpiresIn: accessTokenLife,
+        refreshTokenExpiresIn: refreshTokenLife
       })
 
       const newKeyToken = await keyTokenService.createKeyToken({
@@ -117,8 +121,8 @@ class AccessService {
     const { accessToken, refreshToken } = createTokenPair({
       payload,
       privateKey: foundKeyToken.privateKey,
-      accessTokenExpiresIn: ACCESS_TOKEN_EXPIRES_IN,
-      refreshTokenExpiresIn: REFRESH_TOKEN_EXPIRES_IN
+      accessTokenExpiresIn: accessTokenLife,
+      refreshTokenExpiresIn: refreshTokenLife
     })
 
     const { acknowledged } = await keyTokenService.updateKeyToken({
