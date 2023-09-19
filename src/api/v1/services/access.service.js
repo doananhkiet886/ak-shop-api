@@ -12,9 +12,6 @@ const {
 const { createKeyPairRsa, createTokenPair } = require('../utils/auth.util')
 const getDataInfo = require('../utils/getDataInfo.util')
 
-const ACCESS_TOKEN_EXPIRES_IN = '1h'
-const REFRESH_TOKEN_EXPIRES_IN = '14 days'
-
 const {
   auth: { accessTokenLife, refreshTokenLife }
 } = require('../../../configs/environment.config')
