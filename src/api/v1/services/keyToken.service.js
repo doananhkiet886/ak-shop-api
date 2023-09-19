@@ -22,6 +22,22 @@ class KeyTokenService {
     }
   }
 
+  async findByRefreshToken(refreshToken = '') {
+    try {
+      return await keyTokenModel.findOne({ refreshToken }).lean()
+    } catch (error) {
+      throw new MyError(error.message, 500)
+    }
+  }
+
+  async findByRefreshTokenUsed(refreshToken = '') {
+    try {
+      return await keyTokenModel.findOne({ refreshTokensUsed: refreshToken }).lean()
+    } catch (error) {
+      throw new MyError(error.message, 500)
+    }
+  }
+
   async updateKeyToken({
     filter = {},
     update = {}
@@ -32,6 +48,14 @@ class KeyTokenService {
   async deleteById(id = '') {
     try {
       return await keyTokenModel.deleteOne({ _id: id })
+    } catch (error) {
+      throw new MyError(error.message, 500)
+    }
+  }
+
+  async deleteByUserId(userId = '') {
+    try {
+      return await keyTokenModel.deleteOne({ userId })
     } catch (error) {
       throw new MyError(error.message, 500)
     }

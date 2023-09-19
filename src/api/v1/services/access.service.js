@@ -9,7 +9,7 @@ const {
   UnAuthorizedError,
   MyError
 } = require('../../../core/errorResponse')
-const { createKeyPairRsa, createTokenPair } = require('../utils/auth.util')
+const { createKeyPairRsa, createTokenPair, verifyToken } = require('../utils/auth.util')
 const getDataInfo = require('../utils/getDataInfo.util')
 
 const {
@@ -145,6 +145,47 @@ class AccessService {
     if (!acknowledged) throw new InternalServerError('Sign out failure')
 
     return {}
+  }
+
+  async handleRefreshToken(refreshToken = '') {
+    const foundKeyToken = await keyTokenService.findByRefreshTokenUsed(refreshToken)
+    if (foundKeyToken) {
+      const { userId } = verifyToken({
+        token: refreshToken, secretOrPublicKey: foundKeyToken.privateKey
+      })
+      await keyTokenService.deleteByUserId(userId)
+      throw new UnAuthorizedError()
+    }
+
+    const holderKeyToken = await keyTokenService.findByRefreshToken(refreshToken)
+    if (!holderKeyToken) throw new UnAuthorizedError()
+
+    const holderUser = await userService.findById(holderKeyToken.userId)
+    if (!holderKeyToken) throw new UnAuthorizedError()
+
+    const tokens = createTokenPair({
+      payload: { userId: holderUser._id, username: holderUser.account.username },
+      privateKey: holderKeyToken.privateKey,
+      accessTokenExpiresIn: accessTokenLife,
+      refreshTokenExpiresIn: refreshTokenLife
+    })
+
+    await keyTokenService.updateKeyToken({
+      filter: { _id: holderKeyToken._id },
+      update: {
+        $set: {
+          refreshToken: tokens.refreshToken
+        },
+        $addToSet: {
+          refreshTokensUsed: refreshToken
+        }
+      }
+    })
+
+    return {
+      user: getDataInfo(holderUser, ['_id', 'lastName', 'firstName', 'account.username']),
+      tokens
+    }
   }
 }
 

@@ -1,6 +1,6 @@
 'use strict'
 
-const { CreatedResponse, SuccessResponse, ResetContentResponse } = require('../../../core/successResponse')
+const { CreatedResponse, SuccessResponse, ResetContentResponse, OkResponse } = require('../../../core/successResponse')
 const accessService = require('../services/access.service')
 
 class AccessController {
@@ -25,6 +25,12 @@ class AccessController {
     new ResetContentResponse({
       message: 'Sign out successfully',
       metadata: await accessService.signOut({ keyToken: req.keyToken })
+    }).send(res)
+  }
+
+  async refreshToken(req, res) {
+    new OkResponse({
+      metadata: await accessService.handleRefreshToken(req.body.refreshToken)
     }).send(res)
   }
 }

@@ -9,6 +9,7 @@ const router = express.Router()
 
 router.post('/sign-up', errorAsyncHandler(accessController.signUp))
 router.post('/sign-in', errorAsyncHandler(accessController.signIn))
+router.post('/refresh-token', errorAsyncHandler(accessController.refreshToken))
 
 router.use(errorAsyncHandler(authMiddleware.authenticate))
 
