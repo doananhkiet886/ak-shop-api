@@ -8,10 +8,9 @@ const {
   InternalServerError,
   UnAuthorizedError,
   MyError,
-  ForbiddenError,
   NotFoundError
 } = require('../../../core/errorResponse')
-const { createKeyPairRsa, createTokenPair, verifyToken } = require('../utils/auth.util')
+const { createKeyPairRsa, createTokenPair } = require('../utils/auth.util')
 const getDataInfo = require('../utils/getDataInfo.util')
 
 const {
@@ -45,7 +44,7 @@ class AccessService {
       username,
       password: passwordHash
     })
-    if (!newUser) throw new InternalServerError('Signup failure')
+    if (!newUser) throw new InternalServerError('Sign up failure')
 
     const payload = { userId: newUser._id, username }
     const { publicKey, privateKey } = createKeyPairRsa()
@@ -62,7 +61,7 @@ class AccessService {
       privateKey,
       refreshToken
     })
-    if (!newKeyToken) throw new InternalServerError()
+    if (!newKeyToken) throw new InternalServerError('Automatic sign in failure')
 
     return {
       user: getDataInfo(newUser, ['_id', 'lastName', 'firstName', 'account.username']),
