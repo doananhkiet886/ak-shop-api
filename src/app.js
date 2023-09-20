@@ -6,6 +6,7 @@ const compression = require('compression')
 const morgan = require('morgan')
 const database = require('./configs/database.config')
 const router = require('./routes')
+const { StatusCodes, ReasonPhrases } = require('./core/httpStatusCode')
 
 const app = express()
 
@@ -25,7 +26,9 @@ app.use(router)
 // handling error
 // eslint-disable-next-line no-unused-vars
 app.use((error, req, res, next) => {
-  const { statusCode, message } = error
+  const statusCode = error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR
+  const message = error.message || ReasonPhrases.INTERNAL_SERVER_ERROR
+
   res.status(statusCode).json({
     status: 'Error',
     code: statusCode,

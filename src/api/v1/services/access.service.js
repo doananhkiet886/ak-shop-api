@@ -139,9 +139,6 @@ class AccessService {
   }
 
   async signOut({ keyToken = {} }) {
-    const hasIdProperty = keyToken?._id
-    if (!hasIdProperty) throw new MyError('Invalid parameter in accessService.signOut function', 500)
-
     const { acknowledged } = await keyTokenService.deleteById(keyToken._id)
     if (!acknowledged) throw new InternalServerError('Sign out failure')
 
