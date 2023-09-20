@@ -7,7 +7,9 @@ const {
   ConflictError,
   InternalServerError,
   UnAuthorizedError,
-  MyError
+  MyError,
+  ForbiddenError,
+  NotFoundError
 } = require('../../../core/errorResponse')
 const { createKeyPairRsa, createTokenPair, verifyToken } = require('../utils/auth.util')
 const getDataInfo = require('../utils/getDataInfo.util')
@@ -147,31 +149,18 @@ class AccessService {
     return {}
   }
 
-  async handleRefreshToken(refreshToken = '') {
-    const foundKeyToken = await keyTokenService.findByRefreshTokenUsed(refreshToken)
-    if (foundKeyToken) {
-      const { userId } = verifyToken({
-        token: refreshToken, secretOrPublicKey: foundKeyToken.privateKey
-      })
-      await keyTokenService.deleteByUserId(userId)
-      throw new UnAuthorizedError()
-    }
-
-    const holderKeyToken = await keyTokenService.findByRefreshToken(refreshToken)
-    if (!holderKeyToken) throw new UnAuthorizedError()
-
-    const holderUser = await userService.findById(holderKeyToken.userId)
-    if (!holderKeyToken) throw new UnAuthorizedError()
+  async handleRefreshToken({ keyToken = {}, user = {}, refreshToken = '' }) {
+    const { userId, username } = user
 
     const tokens = createTokenPair({
-      payload: { userId: holderUser._id, username: holderUser.account.username },
-      privateKey: holderKeyToken.privateKey,
+      payload: { userId, username },
+      privateKey: keyToken.privateKey,
       accessTokenExpiresIn: accessTokenLife,
       refreshTokenExpiresIn: refreshTokenLife
     })
 
     await keyTokenService.updateKeyToken({
-      filter: { _id: holderKeyToken._id },
+      filter: { _id: keyToken._id },
       update: {
         $set: {
           refreshToken: tokens.refreshToken
@@ -182,8 +171,10 @@ class AccessService {
       }
     })
 
+    const foundUser = await userService.findById(userId)
+    if (!foundUser) throw new NotFoundError('Not found user')
     return {
-      user: getDataInfo(holderUser, ['_id', 'lastName', 'firstName', 'account.username']),
+      user: getDataInfo(foundUser, ['_id', 'lastName', 'firstName', 'account.username']),
       tokens
     }
   }

@@ -30,7 +30,11 @@ class AccessController {
 
   async refreshToken(req, res) {
     new OkResponse({
-      metadata: await accessService.handleRefreshToken(req.body.refreshToken)
+      metadata: await accessService.handleRefreshToken({
+        keyToken: req.keyToken,
+        user: req.user,
+        refreshToken: req.refreshToken
+      })
     }).send(res)
   }
 }
