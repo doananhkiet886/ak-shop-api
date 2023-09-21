@@ -42,7 +42,7 @@ const development = {
   env: NODE_ENV,
   app: {
     host: DEV_APP_HOST || DEV_APP_HOST_DEFAULT,
-    port: DEV_APP_PORT || DEV_APP_PORT_DEFAULT,
+    port: DEV_APP_PORT || DEV_APP_PORT_DEFAULT
   },
   db: {
     host: DEV_DB_HOST || DEV_DB_HOST_DEFAULT,

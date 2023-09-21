@@ -7,7 +7,6 @@ const {
   ConflictError,
   InternalServerError,
   UnAuthorizedError,
-  MyError,
   NotFoundError
 } = require('../../../core/errorResponse')
 const { createKeyPairRsa, createTokenPair } = require('../utils/auth.util')

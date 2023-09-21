@@ -7,8 +7,7 @@ const { verifyToken } = require('../utils/auth.util')
 const {
   ForbiddenError,
   UnAuthorizedError,
-  BadRequestError,
-  NotFoundError
+  BadRequestError
 } = require('../../../core/errorResponse')
 
 const HEADERS = {
