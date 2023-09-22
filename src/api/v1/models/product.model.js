@@ -1,4 +1,4 @@
-const { model, Schema } = require('mongoose')
+const { model, Schema, Types } = require('mongoose')
 
 const PRODUCT_COLLECTION_NAME = 'Product'
 const PRODUCT_MODEL_NAME = 'productModel'
@@ -36,6 +36,7 @@ const productSchema = new Schema({
   },
   shop: {
     type: Schema.Types.ObjectId,
+    required: true,
     ref: 'Shop'
   },
   attributes: {
@@ -57,6 +58,11 @@ const clothingSchema = new Schema({
   },
   material: {
     type: String
+  },
+  shop: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'Shop'
   }
 }, {
   timestamps: true,
@@ -73,6 +79,11 @@ const electronicSchema = new Schema({
   },
   color: {
     type: String
+  },
+  shop: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'Shop'
   }
 }, {
   timestamps: true,
