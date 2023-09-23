@@ -2,7 +2,8 @@ const productTypes = require('./productTypes')
 const {
   findAllDraftProductsByShopId,
   findAllPublishedProductsByShopId,
-  publishProductByShopId
+  publishProductByShopId,
+  unpublishProductByShopId
 } = require('../models/repositories/productRepo')
 const { BadRequestError } = require('../../../core/errorResponse')
 
@@ -34,6 +35,10 @@ class ProductFactory {
 
   static async publishProductByShopId({ productId = '', shopId = '' }) {
     return await publishProductByShopId({ productId, shopId })
+  }
+
+  static async unpublishProductByShopId({ productId = '', shopId = '' }) {
+    return await unpublishProductByShopId({ productId, shopId })
   }
 }
 
