@@ -5,7 +5,7 @@ const keyTokenModel = require('../models/keyTokenModel')
 const { MyError } = require('../../../core/errorResponse')
 
 class KeyTokenService {
-  async createKeyToken({ userId = '', publicKey, privateKey, refreshToken }) {
+  static async createKeyToken({ userId = '', publicKey, privateKey, refreshToken }) {
     return await keyTokenModel.create({
       userId: new Types.ObjectId(userId),
       publicKey,
@@ -14,7 +14,7 @@ class KeyTokenService {
     })
   }
 
-  async findByUserId(userId = '') {
+  static async findByUserId(userId = '') {
     try {
       return await keyTokenModel.findOne({ userId }).lean()
     } catch (error) {
@@ -22,7 +22,7 @@ class KeyTokenService {
     }
   }
 
-  async findByRefreshToken(refreshToken = '') {
+  static async findByRefreshToken(refreshToken = '') {
     try {
       return await keyTokenModel.findOne({ refreshToken }).lean()
     } catch (error) {
@@ -30,7 +30,7 @@ class KeyTokenService {
     }
   }
 
-  async findByRefreshTokenUsed(refreshToken = '') {
+  static async findByRefreshTokenUsed(refreshToken = '') {
     try {
       return await keyTokenModel.findOne({ refreshTokensUsed: refreshToken }).lean()
     } catch (error) {
@@ -38,14 +38,14 @@ class KeyTokenService {
     }
   }
 
-  async updateKeyToken({
+  static async updateKeyToken({
     filter = {},
     update = {}
   }) {
     return await keyTokenModel.updateOne(filter, update)
   }
 
-  async deleteById(id = '') {
+  static async deleteById(id = '') {
     try {
       return await keyTokenModel.deleteOne({ _id: id })
     } catch (error) {
@@ -53,7 +53,7 @@ class KeyTokenService {
     }
   }
 
-  async deleteByUserId(userId = '') {
+  static async deleteByUserId(userId = '') {
     try {
       return await keyTokenModel.deleteOne({ userId })
     } catch (error) {
@@ -62,4 +62,4 @@ class KeyTokenService {
   }
 }
 
-module.exports = new KeyTokenService()
+module.exports = KeyTokenService

@@ -15,7 +15,7 @@ const {
 } = require('../../../configs/environmentConfig')
 
 class AccessService {
-  async signUp({
+  static async signUp({
     lastName,
     firstName,
     gender,
@@ -69,15 +69,7 @@ class AccessService {
     }
   }
 
-  /**
-   * 1 - check username in db
-   * 2 - check match password
-   * 3 - get privateKey in db by userId
-   * 4 - create AT vs RT
-   * 5 - save RT in db
-   * 6 - return AT, RT, userId, username, lastName, firstName
-   */
-  async signIn({ username = '', password = '' }) {
+  static async signIn({ username = '', password = '' }) {
     const foundUser = await userService.findByUsername(username)
     if (!foundUser) throw new UnAuthorizedError()
 
@@ -135,7 +127,7 @@ class AccessService {
     }
   }
 
-  async signOut({ keyToken = {} }) {
+  static async signOut({ keyToken = {} }) {
     const { acknowledged } = await keyTokenService.deleteById(keyToken._id)
     if (!acknowledged) throw new InternalServerError('Sign out failure')
 
@@ -173,4 +165,4 @@ class AccessService {
   }
 }
 
-module.exports = new AccessService()
+module.exports = AccessService

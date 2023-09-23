@@ -3,7 +3,6 @@ const ProductService = require('./productService')
 const { BadRequestError } = require('../../../core/errorResponse')
 
 class ElectronicService extends ProductService {
-
   async createProduct() {
     const newElectronic = await electronicModel.create({ ...this.attributes, shop: this.shop })
     if (!newElectronic) throw new BadRequestError('Create electronic failure')

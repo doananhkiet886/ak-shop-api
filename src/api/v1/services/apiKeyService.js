@@ -4,7 +4,7 @@
 const apiKeyModel = require('../models/apiKeyModel')
 
 class ApiKeyService {
-  async findByKey(key = '') {
+  static async findByKey(key = '') {
     // await apiKeyModel.create({
     //   key: crypto.randomBytes(64).toString('hex'),
     //   permissions: ['0000'],
@@ -15,4 +15,4 @@ class ApiKeyService {
   }
 }
 
-module.exports = new ApiKeyService()
+module.exports = ApiKeyService

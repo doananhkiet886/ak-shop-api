@@ -3,15 +3,15 @@
 const userModel = require('../models/userModel')
 
 class UserService {
-  async findByUsername(username = '') {
+  static async findByUsername(username = '') {
     return await userModel.findOne({ 'account.username': username }).lean()
   }
 
-  async findById(id = '') {
+  static async findById(id = '') {
     return await userModel.findById(id).lean()
   }
 
-  async createUser({
+  static async createUser({
     lastName,
     firstName,
     gender,
@@ -38,4 +38,4 @@ class UserService {
   }
 }
 
-module.exports = new UserService()
+module.exports = UserService

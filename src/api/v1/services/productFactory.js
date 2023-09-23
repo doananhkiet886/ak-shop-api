@@ -17,7 +17,6 @@ class ProductFactory {
 
   static async createProduct({ type, payload }) {
     const productClass = ProductFactory.productRegister[type]
-    console.log({ productClass })
     if (!productClass) throw new BadRequestError('Invalid product type')
 
     return await new productClass(payload).createProduct()
