@@ -1,7 +1,7 @@
 const { model, Schema } = require('mongoose')
 
-const COLLECTION_NAME = 'Shop'
-const MODEL_NAME = 'shopModel'
+const COLLECTION_NAME = 'shops'
+const DOCUMENT_NAME = 'shop'
 
 const shopSchema = new Schema({
   userId: {
@@ -22,4 +22,4 @@ const shopSchema = new Schema({
   collection: COLLECTION_NAME
 })
 
-module.exports = model(MODEL_NAME, shopSchema)
+module.exports = model(DOCUMENT_NAME, shopSchema)

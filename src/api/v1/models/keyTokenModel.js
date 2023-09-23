@@ -1,7 +1,7 @@
 const { model, Schema } = require('mongoose')
 
-const COLLECTION_NAME = 'KeyToken'
-const MODEL_NAME = 'keyTokenModel'
+const COLLECTION_NAME = 'keyTokens'
+const DOCUMENT_NAME = 'keyToken'
 
 const keyTokenSchema = new Schema({
   userId: {
@@ -30,4 +30,4 @@ const keyTokenSchema = new Schema({
   collection: COLLECTION_NAME
 })
 
-module.exports = model(MODEL_NAME, keyTokenSchema)
+module.exports = model(DOCUMENT_NAME, keyTokenSchema)

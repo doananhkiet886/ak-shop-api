@@ -10,20 +10,15 @@ const {
   BadRequestError
 } = require('../../../core/errorResponse')
 
-const HEADERS = {
-  API_KEY: 'x-api-key',
-  CLIENT_ID: 'x-client-id',
-  AUTHORIZATION: 'authorization',
-  REFRESH_TOKEN: 'x-refresh-token'
-}
+const REQUEST_HEADERS = require('../utils/requestHeadersUtil')
 
 class AuthMiddleware {
   async checkApiKey(req, res, next) {
-    const apiKey = req.headers[HEADERS.API_KEY]
-    if (!apiKey) throw new ForbiddenError(`${HEADERS.API_KEY} missing`)
+    const apiKey = req.headers[REQUEST_HEADERS.API_KEY]
+    if (!apiKey) throw new ForbiddenError(`${REQUEST_HEADERS.API_KEY} missing`)
 
     const apiKeyObj = await apiKeyService.findByKey(apiKey)
-    if (!apiKeyObj) throw new ForbiddenError(`Invalid ${HEADERS.API_KEY}`)
+    if (!apiKeyObj) throw new ForbiddenError(`Invalid ${REQUEST_HEADERS.API_KEY}`)
 
     req.apiKeyObj = apiKeyObj
     next()
@@ -43,13 +38,13 @@ class AuthMiddleware {
   }
 
   async authenticate(req, res, next) {
-    const userId = req.headers[HEADERS.CLIENT_ID]
-    if (!userId) throw new BadRequestError(`${HEADERS.CLIENT_ID} missing`)
+    const userId = req.headers[REQUEST_HEADERS.CLIENT_ID]
+    if (!userId) throw new BadRequestError(`${REQUEST_HEADERS.CLIENT_ID} missing`)
 
     const foundKeyToken = await keyTokenService.findByUserId(userId)
     if (!foundKeyToken) throw new UnAuthorizedError()
 
-    const refreshToken = req.headers[HEADERS.REFRESH_TOKEN]
+    const refreshToken = req.headers[REQUEST_HEADERS.REFRESH_TOKEN]
     if (refreshToken) {
       try {
         const decodedUser = verifyToken({
@@ -69,23 +64,23 @@ class AuthMiddleware {
 
         const isValidRefreshToken = foundKeyToken.refreshToken === refreshToken
         if (!isValidRefreshToken)
-          throw new UnAuthorizedError(`Invalid ${HEADERS.REFRESH_TOKEN}`)
+          throw new UnAuthorizedError(`Invalid ${REQUEST_HEADERS.REFRESH_TOKEN}`)
 
         req.keyToken = foundKeyToken
         req.user = decodedUser
         req.refreshToken = refreshToken
         return next()
       } catch (error) {
-        throw new UnAuthorizedError(`Invalid ${HEADERS.REFRESH_TOKEN}`)
+        throw new UnAuthorizedError(`Invalid ${REQUEST_HEADERS.REFRESH_TOKEN}`)
       }
     }
 
-    const accessToken = req.headers[HEADERS.AUTHORIZATION]
+    const accessToken = req.headers[REQUEST_HEADERS.AUTHORIZATION]
     if (!accessToken)
-      throw new BadRequestError(`${HEADERS.AUTHORIZATION} missing`)
+      throw new BadRequestError(`${REQUEST_HEADERS.AUTHORIZATION} missing`)
 
     const foundUser = await userService.findById(userId)
-    if (!foundUser) throw new UnAuthorizedError(`Invalid ${HEADERS.CLIENT_ID}`)
+    if (!foundUser) throw new UnAuthorizedError(`Invalid ${REQUEST_HEADERS.CLIENT_ID}`)
 
     try {
       const decodedUser = verifyToken({
@@ -101,7 +96,7 @@ class AuthMiddleware {
     } catch (error) {
       const isExpiredToken = error.name === 'TokenExpiredError'
       if (isExpiredToken)
-        throw new UnAuthorizedError(`Expired ${HEADERS.AUTHORIZATION}`)
+        throw new UnAuthorizedError(`Expired ${REQUEST_HEADERS.AUTHORIZATION}`)
     }
   }
 }

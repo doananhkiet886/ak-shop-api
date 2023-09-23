@@ -1,13 +1,13 @@
 const { model, Schema } = require('mongoose')
 
-const PRODUCT_COLLECTION_NAME = 'Product'
-const PRODUCT_MODEL_NAME = 'productModel'
+const PRODUCT_COLLECTION_NAME = 'products'
+const PRODUCT_DOCUMENT_NAME = 'product'
 
-const CLOTHING_COLLECTION_NAME = 'Clothing'
-const CLOTHING_MODEL_NAME = 'clothingModel'
+const CLOTHING_COLLECTION_NAME = 'clothes'
+const CLOTHING_DOCUMENT_NAME = 'clothing'
 
-const ELECTRONIC_COLLECTION_NAME = 'Electronic'
-const ELECTRONIC_MODEL_NAME = 'electronicModel'
+const ELECTRONIC_COLLECTION_NAME = 'electronics'
+const ELECTRONIC_DOCUMENT_NAME = 'electronic'
 
 const productSchema = new Schema({
   name: {
@@ -91,7 +91,7 @@ const electronicSchema = new Schema({
 })
 
 module.exports = {
-  productModel: model(PRODUCT_MODEL_NAME, productSchema),
-  clothingModel: model(CLOTHING_MODEL_NAME, clothingSchema),
-  electronicModel: model(ELECTRONIC_MODEL_NAME, electronicSchema)
+  productModel: model(PRODUCT_DOCUMENT_NAME, productSchema),
+  clothingModel: model(CLOTHING_DOCUMENT_NAME, clothingSchema),
+  electronicModel: model(ELECTRONIC_DOCUMENT_NAME, electronicSchema)
 }

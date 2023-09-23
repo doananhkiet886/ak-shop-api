@@ -1,7 +1,7 @@
 const { model, Schema } = require('mongoose')
 
-const COLLECTION_NAME = 'User'
-const MODEL_NAME = 'userModel'
+const COLLECTION_NAME = 'users'
+const DOCUMENT_NAME = 'user'
 
 const userSchema = new Schema({
   lastName: {
@@ -71,4 +71,4 @@ const userSchema = new Schema({
   collection: COLLECTION_NAME
 })
 
-module.exports = model(MODEL_NAME, userSchema)
+module.exports = model(DOCUMENT_NAME, userSchema)
