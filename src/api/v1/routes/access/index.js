@@ -1,9 +1,9 @@
 'use strict'
 
 const express = require('express')
-const accessController = require('../controllers/access.controller')
-const errorAsyncHandler = require('../../../core/errorAsyncHandler')
-const authMiddleware = require('../middlewares/auth.middleware')
+const accessController = require('../../controllers/access.controller')
+const errorAsyncHandler = require('../../../../core/errorAsyncHandler')
+const authMiddleware = require('../../middlewares/auth.middleware')
 
 const router = express.Router()
 
