@@ -1,7 +1,7 @@
 'use strict'
 
 const express = require('express')
-const v1Router = require('../api/v1/routes')
+const v1Router = require('../../api/v1/routes')
 
 const router = express.Router()
 
