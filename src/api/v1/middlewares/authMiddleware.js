@@ -1,9 +1,9 @@
 'use strict'
 
-const apiKeyService = require('../services/apiKey.service')
-const userService = require('../services/user.service')
-const keyTokenService = require('../services/keyToken.service')
-const { verifyToken } = require('../utils/auth.util')
+const apiKeyService = require('../services/apiKeyService')
+const userService = require('../services/userService')
+const keyTokenService = require('../services/keyTokenService')
+const { verifyToken } = require('../utils/authUtil')
 const {
   ForbiddenError,
   UnAuthorizedError,

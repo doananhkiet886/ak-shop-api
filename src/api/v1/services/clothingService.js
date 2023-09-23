@@ -1,5 +1,5 @@
-const { clothingModel } = require('../models/product.model')
-const ProductService = require('./product.service')
+const { clothingModel } = require('../models/productModel')
+const ProductService = require('./productService')
 const { BadRequestError } = require('../../../core/errorResponse')
 
 class ClothingService extends ProductService {

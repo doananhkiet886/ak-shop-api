@@ -1,7 +1,7 @@
 'use strict'
 
 const { CreatedResponse } = require('../../../core/successResponse')
-const ProductFactory = require('../services/product.factory')
+const ProductFactory = require('../services/productFactory')
 
 class ProductController {
   // [POST] /api/v1//products

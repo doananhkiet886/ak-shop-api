@@ -1,5 +1,5 @@
-const { electronicModel } = require('../models/product.model')
-const ProductService = require('./product.service')
+const { electronicModel } = require('../models/productModel')
+const ProductService = require('./productService')
 const { BadRequestError } = require('../../../core/errorResponse')
 
 class ElectronicService extends ProductService {

@@ -1,6 +1,6 @@
 'use strict'
 
-const shopService = require('../services/shop.service')
+const shopService = require('../services/shopService')
 const { CreatedResponse } = require('../../../core/successResponse')
 
 class ShopController {

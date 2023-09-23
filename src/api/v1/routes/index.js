@@ -1,7 +1,7 @@
 'use strict'
 
 const express = require('express')
-const { checkApiKey, checkPermission, authenticate } = require('../middlewares/auth.middleware')
+const { checkApiKey, checkPermission, authenticate } = require('../middlewares/authMiddleware')
 const errorAsyncHandler = require('../../../core/errorAsyncHandler')
 const accessRouter = require('./access')
 const shopRouter = require('./shop')

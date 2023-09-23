@@ -1,8 +1,8 @@
 'use strict'
 
 const { Types } = require('mongoose')
-const shopModel = require('../models/shop.model')
-const userService = require('./user.service')
+const shopModel = require('../models/shopModel')
+const userService = require('./userService')
 const { NotFoundError, InternalServerError } = require('../../../core/errorResponse')
 
 class ShopService {

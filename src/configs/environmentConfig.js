@@ -18,7 +18,7 @@ const {
   PROD_DB_HOST_DEFAULT,
   PROD_DB_PORT_DEFAULT,
   PROD_DB_NAME_DEFAULT
-} = require('./constants.config')
+} = require('./constantsConfig')
 
 const {
   NODE_ENV,

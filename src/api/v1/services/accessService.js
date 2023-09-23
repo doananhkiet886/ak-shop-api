@@ -1,18 +1,18 @@
 'use strict'
 
 const bcrypt = require('bcrypt')
-const userService = require('./user.service')
-const keyTokenService = require('./keyToken.service')
+const userService = require('./userService')
+const keyTokenService = require('./keyTokenService')
 const {
   ConflictError, InternalServerError,
   UnAuthorizedError, NotFoundError
 } = require('../../../core/errorResponse')
-const { createKeyPairRsa, createTokenPair } = require('../utils/auth.util')
-const getDataInfo = require('../utils/getDataInfo.util')
+const { createKeyPairRsa, createTokenPair } = require('../utils/authUtil')
+const getDataInfo = require('../utils/getDataInfoUtil')
 
 const {
   auth: { accessTokenLife, refreshTokenLife }
-} = require('../../../configs/environment.config')
+} = require('../../../configs/environmentConfig')
 
 class AccessService {
   async signUp({

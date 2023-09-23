@@ -1,5 +1,5 @@
-const ElectronicService = require('./electronic.service')
-const ClothingService = require('./clothing.service')
+const ElectronicService = require('./electronicService')
+const ClothingService = require('./clothingService')
 
 const productTypes = [
   { type: 'Electronic', productClass: ElectronicService },

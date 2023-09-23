@@ -1,8 +1,8 @@
 'use strict'
 
 const mongoose = require('mongoose')
-const { NODE_ENV_DEVELOPMENT } = require('../configs/constants.config')
-const { env, db: { host, port, name } } = require('./environment.config')
+const { NODE_ENV_DEVELOPMENT } = require('../configs/constantsConfig')
+const { env, db: { host, port, name } } = require('./environmentConfig')
 
 const mongodbUri = `mongodb://${host}:${port}/${name}`
 

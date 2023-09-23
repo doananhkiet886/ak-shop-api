@@ -1,6 +1,6 @@
 'use strict'
 
-const userModel = require('../models/user.model')
+const userModel = require('../models/userModel')
 
 class UserService {
   async findByUsername(username = '') {

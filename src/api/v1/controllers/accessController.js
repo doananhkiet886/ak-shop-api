@@ -1,7 +1,7 @@
 'use strict'
 
 const { CreatedResponse, SuccessResponse, ResetContentResponse, OkResponse } = require('../../../core/successResponse')
-const accessService = require('../services/access.service')
+const accessService = require('../services/accessService')
 
 class AccessController {
   // [POST] /api/v1/sign-up
