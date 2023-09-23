@@ -1,4 +1,4 @@
-const { model, Schema, Types } = require('mongoose')
+const { model, Schema } = require('mongoose')
 
 const PRODUCT_COLLECTION_NAME = 'Product'
 const PRODUCT_MODEL_NAME = 'productModel'
