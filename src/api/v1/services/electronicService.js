@@ -1,4 +1,4 @@
-const { electronicModel } = require('../models/productModel')
+const electronicModel = require('../models/electronicModel')
 const ProductService = require('./productService')
 const { BadRequestError } = require('../../../core/errorResponse')
 

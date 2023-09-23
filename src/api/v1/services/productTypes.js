@@ -1,9 +1,7 @@
 const ElectronicService = require('./electronicService')
 const ClothingService = require('./clothingService')
 
-const productTypes = [
+module.exports = [
   { type: 'Electronic', productClass: ElectronicService },
   { type: 'Clothing', productClass: ClothingService }
 ]
-
-module.exports = productTypes
