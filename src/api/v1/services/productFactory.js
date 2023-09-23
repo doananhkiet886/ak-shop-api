@@ -1,9 +1,9 @@
 const productTypes = require('./productTypes')
 const {
-  findAllDraftProductsByShopId,
-  findAllPublishedProductsByShopId,
-  publishProductByShopId,
-  unpublishProductByShopId
+  findAllDraftProductsForShop,
+  findAllPublishedProductsForShop,
+  publishProductForShop,
+  unpublishProductForShop
 } = require('../models/repositories/productRepo')
 const { BadRequestError } = require('../../../core/errorResponse')
 
@@ -23,22 +23,22 @@ class ProductFactory {
     return await new productClass(payload).createProduct()
   }
 
-  static async findAllDraftProductsByShopId({ shopId = '', skip, limit }) {
+  static async findAllDraftProductsForShop({ shopId = '', skip, limit }) {
     const query = { shop: shopId, isDraft: true }
-    return await findAllDraftProductsByShopId({ query, skip, limit })
+    return await findAllDraftProductsForShop({ query, skip, limit })
   }
 
-  static async findAllPublishedProductsByShopId({ shopId = '', skip, limit }) {
+  static async findAllPublishedProductsForShop({ shopId = '', skip, limit }) {
     const query = { shop: shopId, isPublished: true }
-    return await findAllPublishedProductsByShopId({ query, skip, limit })
+    return await findAllPublishedProductsForShop({ query, skip, limit })
   }
 
-  static async publishProductByShopId({ productId = '', shopId = '' }) {
-    return await publishProductByShopId({ productId, shopId })
+  static async publishProductForShop({ productId = '', shopId = '' }) {
+    return await publishProductForShop({ productId, shopId })
   }
 
-  static async unpublishProductByShopId({ productId = '', shopId = '' }) {
-    return await unpublishProductByShopId({ productId, shopId })
+  static async unpublishProductForShop({ productId = '', shopId = '' }) {
+    return await unpublishProductForShop({ productId, shopId })
   }
 }
 

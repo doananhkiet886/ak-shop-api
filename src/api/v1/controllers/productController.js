@@ -29,12 +29,12 @@ class ProductController {
    * @param { Number } limit
    * @returns { JSON }
    */
-  async getAllDraftProductsByShopId(req, res) {
+  async getAllDraftProductsForShop(req, res) {
     const { shopId } = req.body
 
     new SuccessResponse({
       message: 'Get all draft product successfully',
-      metadata: await ProductFactory.findAllDraftProductsByShopId({ shopId })
+      metadata: await ProductFactory.findAllDraftProductsForShop({ shopId })
     }).send(res)
   }
 
@@ -45,12 +45,12 @@ class ProductController {
    * @param { Number } limit
    * @returns { JSON }
    */
-  async getAllPublishedProductsByShopId(req, res) {
+  async getAllPublishedProductsForShop(req, res) {
     const { shopId } = req.body
 
     new SuccessResponse({
       message: 'Get all published product successfully',
-      metadata: await ProductFactory.findAllPublishedProductsByShopId({ shopId })
+      metadata: await ProductFactory.findAllPublishedProductsForShop({ shopId })
     }).send(res)
   }
 
@@ -61,13 +61,13 @@ class ProductController {
    * @param { String } shopId
    * @returns { JSON }
    */
-  async publishProductByShopId(req, res) {
+  async publishProductForShop(req, res) {
     const { shopId } = req.body
     const productId = req.params.id
 
     new SuccessResponse({
       message: 'publish product successfully',
-      metadata: await ProductFactory.publishProductByShopId({ productId, shopId })
+      metadata: await ProductFactory.publishProductForShop({ productId, shopId })
     }).send(res)
   }
 
@@ -78,13 +78,13 @@ class ProductController {
    * @param { String } shopId
    * @returns { JSON }
    */
-  async unpublishProductByShopId(req, res) {
+  async unpublishProductForShop(req, res) {
     const { shopId } = req.body
     const productId = req.params.id
 
     new SuccessResponse({
       message: 'publish product successfully',
-      metadata: await ProductFactory.unpublishProductByShopId({ productId, shopId })
+      metadata: await ProductFactory.unpublishProductForShop({ productId, shopId })
     }).send(res)
   }
 }

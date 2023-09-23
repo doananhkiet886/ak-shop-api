@@ -10,15 +10,15 @@ const queryProduct = async({ query = {}, skip = 0, limit = 50 }) => {
     .lean()
 }
 
-const findAllDraftProductsByShopId = async ({ query, skip, limit }) => {
+const findAllDraftProductsForShop = async ({ query, skip, limit }) => {
   return await queryProduct({ query, skip, limit })
 }
 
-const findAllPublishedProductsByShopId = async ({ query, skip, limit }) => {
+const findAllPublishedProductsForShop = async ({ query, skip, limit }) => {
   return await queryProduct({ query, skip, limit })
 }
 
-const publishProductByShopId = async ({ productId = '', shopId = '' }) => {
+const publishProductForShop = async ({ productId = '', shopId = '' }) => {
   const foundProduct = await productModel.findOne({
     _id: productId,
     shop: shopId
@@ -32,7 +32,7 @@ const publishProductByShopId = async ({ productId = '', shopId = '' }) => {
   return modifiedCount
 }
 
-const unpublishProductByShopId = async ({ productId = '', shopId = '' }) => {
+const unpublishProductForShop = async ({ productId = '', shopId = '' }) => {
   const foundProduct = await productModel.findOne({
     _id: productId,
     shop: shopId
@@ -47,8 +47,8 @@ const unpublishProductByShopId = async ({ productId = '', shopId = '' }) => {
 }
 
 module.exports = {
-  findAllDraftProductsByShopId,
-  findAllPublishedProductsByShopId,
-  publishProductByShopId,
-  unpublishProductByShopId
+  findAllDraftProductsForShop,
+  findAllPublishedProductsForShop,
+  publishProductForShop,
+  unpublishProductForShop
 }
