@@ -14,6 +14,21 @@ const findAllDraftProductsByShopId = async ({ query, skip, limit }) => {
   return await queryProduct({ query, skip, limit })
 }
 
+const publishProductByShopId = async ({ productId = '', shopId = '' }) => {
+  const foundProduct = await productModel.findOne({
+    _id: productId,
+    shop: shopId
+  })
+  if (!foundProduct) return null
+
+  foundProduct.isDraft = false
+  foundProduct.isPublished = true
+
+  const modifiedCount = await foundProduct.save()
+  return modifiedCount
+}
+
 module.exports = {
-  findAllDraftProductsByShopId
+  findAllDraftProductsByShopId,
+  publishProductByShopId
 }

@@ -1,4 +1,3 @@
-const { Types } = require('mongoose')
 const productTypes = require('./productTypes')
 const productRepo = require('../models/repositories/productRepo')
 const { BadRequestError } = require('../../../core/errorResponse')
@@ -20,8 +19,12 @@ class ProductFactory {
   }
 
   static async findAllDraftProductsByShopId({ shopId = '', skip, limit }) {
-    const query = { shop: new Types.ObjectId(shopId), isDraft: true }
+    const query = { shop: shopId, isDraft: true }
     return await productRepo.findAllDraftProductsByShopId({ query, skip, limit })
+  }
+
+  static async publishProductByShopId({ productId = '', shopId = '' }) {
+    return await productRepo.publishProductByShopId({ productId, shopId })
   }
 }
 

@@ -7,7 +7,9 @@ const router = express.Router()
 
 router.use(errorAsyncHandler(authenticate))
 
-router.post('/', errorAsyncHandler(productController.createProduct))
 router.get('/draft/all', errorAsyncHandler(productController.getAllDraftProductsByShopId))
+
+router.post('/', errorAsyncHandler(productController.createProduct))
+router.post('/publish/:id', errorAsyncHandler(productController.publishProductByShopId))
 
 module.exports = router
