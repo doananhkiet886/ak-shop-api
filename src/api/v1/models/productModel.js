@@ -32,7 +32,7 @@ const productSchema = new Schema({
   shop: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'Shop'
+    ref: 'shop'
   },
   slug: {
     type: String

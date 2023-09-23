@@ -17,7 +17,7 @@ const clothingSchema = new Schema({
   shop: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'Shop'
+    ref: 'shop'
   }
 }, {
   timestamps: true,
