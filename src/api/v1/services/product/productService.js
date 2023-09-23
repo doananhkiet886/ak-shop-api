@@ -1,6 +1,6 @@
 'use strict'
 
-const productModel = require('../models/productModel')
+const productModel = require('../../models/product/productModel')
 
 class ProductService {
 

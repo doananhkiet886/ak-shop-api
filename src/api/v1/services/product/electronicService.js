@@ -1,6 +1,6 @@
-const electronicModel = require('../models/electronicModel')
+const electronicModel = require('../../models/product/electronicModel')
 const ProductService = require('./productService')
-const { BadRequestError } = require('../../../core/errorResponse')
+const { BadRequestError } = require('../../../../core/errorResponse')
 
 class ElectronicService extends ProductService {
   async createProduct() {

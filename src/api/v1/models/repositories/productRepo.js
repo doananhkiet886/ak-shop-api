@@ -1,4 +1,4 @@
-const productModel = require('../productModel')
+const productModel = require('../product/productModel')
 
 const queryProduct = async({ query = {}, skip = 0, limit = 50 }) => {
   return await productModel

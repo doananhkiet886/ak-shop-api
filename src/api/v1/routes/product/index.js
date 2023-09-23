@@ -1,17 +1,21 @@
 const express = require('express')
 const { authenticate } = require('../../middlewares/authMiddleware')
 const productController = require('../../controllers/productController')
+const draftProductRouter = require('./draftProductRoute')
+const publishedProductRouter = require('./publishedProductRoute')
+const publishProductRouter = require('./publishProductRoute')
+const unpublishProductRouter = require('./unpublishProductRoute')
 const errorAsyncHandler = require('../../../../core/errorAsyncHandler')
 
 const router = express.Router()
 
 router.use(errorAsyncHandler(authenticate))
 
-router.get('/draft/all', errorAsyncHandler(productController.getAllDraftProductsForShop))
-router.get('/published/all', errorAsyncHandler(productController.getAllPublishedProductsForShop))
+router.use('/draft', draftProductRouter)
+router.use('/published', publishedProductRouter)
 
 router.post('/', errorAsyncHandler(productController.createProduct))
-router.post('/publish/:id', errorAsyncHandler(productController.publishProductForShop))
-router.post('/unpublish/:id', errorAsyncHandler(productController.unpublishProductForShop))
+router.use('/publish', publishProductRouter)
+router.use('/unpublish', unpublishProductRouter)
 
 module.exports = router

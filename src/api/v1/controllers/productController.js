@@ -1,8 +1,7 @@
 'use strict'
 
-const { BadRequestError } = require('../../../core/errorResponse')
-const { CreatedResponse, OkResponse, SuccessResponse } = require('../../../core/successResponse')
-const ProductFactory = require('../services/productFactory')
+const { CreatedResponse, SuccessResponse } = require('../../../core/successResponse')
+const productFactory = require('../services/product')
 
 class ProductController {
   /**
@@ -18,7 +17,7 @@ class ProductController {
 
     new CreatedResponse({
       message: 'Create product successfully',
-      metadata: await ProductFactory.createProduct({ type, payload })
+      metadata: await productFactory.createProduct({ type, payload })
     }).send(res)
   }
 
@@ -34,7 +33,7 @@ class ProductController {
 
     new SuccessResponse({
       message: 'Get all draft product successfully',
-      metadata: await ProductFactory.findAllDraftProductsForShop({ shopId })
+      metadata: await productFactory.findAllDraftProductsForShop({ shopId })
     }).send(res)
   }
 
@@ -50,7 +49,7 @@ class ProductController {
 
     new SuccessResponse({
       message: 'Get all published product successfully',
-      metadata: await ProductFactory.findAllPublishedProductsForShop({ shopId })
+      metadata: await productFactory.findAllPublishedProductsForShop({ shopId })
     }).send(res)
   }
 
@@ -67,7 +66,7 @@ class ProductController {
 
     new SuccessResponse({
       message: 'publish product successfully',
-      metadata: await ProductFactory.publishProductForShop({ productId, shopId })
+      metadata: await productFactory.publishProductForShop({ productId, shopId })
     }).send(res)
   }
 
@@ -84,7 +83,7 @@ class ProductController {
 
     new SuccessResponse({
       message: 'publish product successfully',
-      metadata: await ProductFactory.unpublishProductForShop({ productId, shopId })
+      metadata: await productFactory.unpublishProductForShop({ productId, shopId })
     }).send(res)
   }
 }
