@@ -4,10 +4,8 @@ const bcrypt = require('bcrypt')
 const userService = require('./user.service')
 const keyTokenService = require('./keyToken.service')
 const {
-  ConflictError,
-  InternalServerError,
-  UnAuthorizedError,
-  NotFoundError
+  ConflictError, InternalServerError,
+  UnAuthorizedError, NotFoundError
 } = require('../../../core/errorResponse')
 const { createKeyPairRsa, createTokenPair } = require('../utils/auth.util')
 const getDataInfo = require('../utils/getDataInfo.util')

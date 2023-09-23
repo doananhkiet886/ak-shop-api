@@ -1,7 +1,7 @@
 'use strict'
 
 const { CreatedResponse } = require('../../../core/successResponse')
-const productService = require('../services/product.service')
+const ProductFactory = require('../services/product.factory')
 
 class ProductController {
   // [POST] /api/v1//products
@@ -11,7 +11,7 @@ class ProductController {
 
     new CreatedResponse({
       message: 'Create product successfully',
-      metadata: await productService.createProduct({ type, payload })
+      metadata: await ProductFactory.createProduct({ type, payload })
     }).send(res)
   }
 }

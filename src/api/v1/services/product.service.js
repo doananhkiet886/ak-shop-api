@@ -1,21 +1,6 @@
 'use strict'
 
-const { productModel, electronicModel, clothingModel } = require('../models/product.model')
-const { BadRequestError } = require('../../../core/errorResponse')
-
-class ProductFactory {
-
-  async createProduct({ type, payload }) {
-    switch (type) {
-    case 'Electronic':
-      return await new ElectronicService(payload).createProduct()
-    case 'Clothing':
-      return await new ClothingService(payload).createProduct()
-    default:
-      throw new BadRequestError('Invalid type')
-    }
-  }
-}
+const { productModel } = require('../models/product.model')
 
 class ProductService {
 
@@ -38,30 +23,4 @@ class ProductService {
   }
 }
 
-class ClothingService extends ProductService {
-
-  async createProduct() {
-    const newClothing = await clothingModel.create({ ...this.attributes, shop: this.shop })
-    if (!newClothing) throw new BadRequestError('Create clothing failure')
-
-    const newProduct = await super.createProduct(newClothing._id)
-    if (!newProduct) throw new BadRequestError('Create product failure')
-
-    return newProduct
-  }
-}
-
-class ElectronicService extends ProductService {
-
-  async createProduct() {
-    const newElectronic = await electronicModel.create({ ...this.attributes, shop: this.shop })
-    if (!newElectronic) throw new BadRequestError('Create electronic failure')
-
-    const newProduct = await super.createProduct(newElectronic._id)
-    if (!newProduct) throw new BadRequestError('Create product failure')
-
-    return newProduct
-  }
-}
-
-module.exports = new ProductFactory()
+module.exports = ProductService
