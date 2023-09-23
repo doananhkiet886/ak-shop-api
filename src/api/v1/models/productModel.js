@@ -1,4 +1,5 @@
 const { model, Schema } = require('mongoose')
+const slugify = require('slugify')
 
 const COLLECTION_NAME = 'products'
 const DOCUMENT_NAME = 'product'
@@ -33,13 +34,42 @@ const productSchema = new Schema({
     required: true,
     ref: 'Shop'
   },
+  slug: {
+    type: String
+  },
+  ratingsAverage: {
+    type: Number,
+    default: 4.5,
+    min: [1, 'Rating must be above 1'],
+    max: [5, 'Rating must be below 5'],
+    set: val => Math.round(val * 10) / 10
+  },
+  variations: {
+    type: Array,
+    default: []
+  },
   attributes: {
     type: Schema.Types.Mixed,
     required: true
+  },
+  isDraft: {
+    type: Boolean,
+    default: true,
+    select: false
+  },
+  isPublished: {
+    type: Boolean,
+    default: false,
+    select: false
   }
 }, {
   timestamps: true,
   collection: COLLECTION_NAME
+})
+
+productSchema.pre('save', function(next) {
+  this.slug = slugify(this.name, { lower: true, trim: true })
+  next()
 })
 
 module.exports = model(DOCUMENT_NAME, productSchema)
