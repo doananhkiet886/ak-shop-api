@@ -14,6 +14,10 @@ const findAllDraftProductsByShopId = async ({ query, skip, limit }) => {
   return await queryProduct({ query, skip, limit })
 }
 
+const findAllPublishedProductsByShopId = async ({ query, skip, limit }) => {
+  return await queryProduct({ query, skip, limit })
+}
+
 const publishProductByShopId = async ({ productId = '', shopId = '' }) => {
   const foundProduct = await productModel.findOne({
     _id: productId,
@@ -30,5 +34,6 @@ const publishProductByShopId = async ({ productId = '', shopId = '' }) => {
 
 module.exports = {
   findAllDraftProductsByShopId,
+  findAllPublishedProductsByShopId,
   publishProductByShopId
 }

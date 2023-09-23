@@ -1,5 +1,9 @@
 const productTypes = require('./productTypes')
-const productRepo = require('../models/repositories/productRepo')
+const {
+  findAllDraftProductsByShopId,
+  findAllPublishedProductsByShopId,
+  publishProductByShopId
+} = require('../models/repositories/productRepo')
 const { BadRequestError } = require('../../../core/errorResponse')
 
 class ProductFactory {
@@ -20,11 +24,16 @@ class ProductFactory {
 
   static async findAllDraftProductsByShopId({ shopId = '', skip, limit }) {
     const query = { shop: shopId, isDraft: true }
-    return await productRepo.findAllDraftProductsByShopId({ query, skip, limit })
+    return await findAllDraftProductsByShopId({ query, skip, limit })
+  }
+
+  static async findAllPublishedProductsByShopId({ shopId = '', skip, limit }) {
+    const query = { shop: shopId, isPublished: true }
+    return await findAllPublishedProductsByShopId({ query, skip, limit })
   }
 
   static async publishProductByShopId({ productId = '', shopId = '' }) {
-    return await productRepo.publishProductByShopId({ productId, shopId })
+    return await publishProductByShopId({ productId, shopId })
   }
 }
 

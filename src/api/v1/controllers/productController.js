@@ -40,6 +40,22 @@ class ProductController {
 
   /**
    * @desc get all draft products by shopId
+   * @route [GET] /api/v1/products/published/all
+   * @param { Number } skip
+   * @param { Number } limit
+   * @returns { JSON }
+   */
+  async getAllPublishedProductsByShopId(req, res) {
+    const { shopId } = req.body
+
+    new SuccessResponse({
+      message: 'Get all published product successfully',
+      metadata: await ProductFactory.findAllPublishedProductsByShopId({ shopId })
+    }).send(res)
+  }
+
+  /**
+   * @desc get all draft products by shopId
    * @route [POST] /api/v1/products/publish/:id
    * @param { String } productId
    * @param { String } shopId
