@@ -88,17 +88,17 @@ class ProductController {
   }
 
   /**
- * @desc search product for user
- * @route [GET] /api/v1/products/search/:keyword
- * @param { String } keyword
- * @returns { JSON }
+   * @desc search product for buyer
+   * @route [GET] /api/v1/products/search/:keyword
+   * @param { String } keyword
+   * @returns { JSON }
  */
-  async searchProductForUser(req, res) {
+  async searchProductForBuyer(req, res) {
     const { keyword } = req.params
 
     new SuccessResponse({
       message: 'Search product successfully',
-      metadata: await productFactory.searchProductForUser({ keyword })
+      metadata: await productFactory.searchProductForBuyer({ keyword })
     }).send(res)
   }
 }

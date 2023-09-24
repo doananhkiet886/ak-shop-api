@@ -46,7 +46,7 @@ const unpublishProductForShop = async ({ productId = '', shopId = '' }) => {
   return modifiedCount
 }
 
-const searchProductForUser = async ({ keyword = '' }) => {
+const searchProductForBuyer = async ({ keyword = '' }) => {
   const searchRegEx = new RegExp(keyword)
   const searchedProduct = await productModel
     .find({
@@ -68,5 +68,5 @@ module.exports = {
   findAllPublishedProductsForShop,
   publishProductForShop,
   unpublishProductForShop,
-  searchProductForUser
+  searchProductForBuyer
 }

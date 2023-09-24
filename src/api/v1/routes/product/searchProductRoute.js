@@ -4,6 +4,6 @@ const errorAsyncHandler = require('../../../../core/errorAsyncHandler')
 
 const router = express.Router()
 
-router.get('/:keyword', errorAsyncHandler(productController.searchProductForUser))
+router.get('/:keyword', errorAsyncHandler(productController.searchProductForBuyer))
 
 module.exports = router
