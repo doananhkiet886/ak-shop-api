@@ -2,6 +2,7 @@
 
 const { CreatedResponse, SuccessResponse } = require('../../../core/successResponse')
 const productFactory = require('../services/product')
+const { createFilterObjectFromQueryObject } = require('../helpers/mongooseHelper')
 
 class ProductController {
   /**
@@ -99,6 +100,49 @@ class ProductController {
     new SuccessResponse({
       message: 'Search product successfully',
       metadata: await productFactory.searchProductForBuyer({ keyword })
+    }).send(res)
+  }
+
+  /**
+   * @desc get all products for buyer
+   * @route [GET] /api/v1/products?<filter_field>=&_limit=&_page=&_sort=&_select=
+   * @param { String } <filter_field>
+   * @param { Object } filter from <filter_fields>
+   * @param { Number } _limit
+   * @param { Number } _page
+   * @param { String } _sort
+   * @param { String } _select
+   * @returns { JSON }
+ */
+  async getAllProductsForBuyer(req, res) {
+    const { _limit, _page, _sort, _select } = req.query
+    const filter = createFilterObjectFromQueryObject({ queryObject: req.query })
+
+    new SuccessResponse({
+      message: 'Get all products successfully',
+      metadata: await productFactory.findAllProductsForBuyer({
+        filter, limit: _limit, page: _page, sort:_sort, select: _select
+      })
+    }).send(res)
+  }
+
+  /**
+   * @desc get product for buyer
+   * @route [GET] /api/v1/products/:id?_select=
+   * @param { String } id
+   * @param { String } _select
+   * @returns { JSON }
+ */
+  async getProductForBuyer(req, res) {
+    const { id } = req.params
+    const { _select } = req.query
+
+    new SuccessResponse({
+      message: 'Get product successfully',
+      metadata: await productFactory.findProductForBuyer({
+        productId: id,
+        select: _select
+      })
     }).send(res)
   }
 }

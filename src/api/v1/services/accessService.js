@@ -8,7 +8,7 @@ const {
   UnAuthorizedError, NotFoundError
 } = require('../../../core/errorResponse')
 const { createKeyPairRsa, createTokenPair } = require('../utils/authUtil')
-const getDataInfo = require('../utils/getDataInfoUtil')
+const { getDataInfo } = require('../utils')
 
 const {
   auth: { accessTokenLife, refreshTokenLife }

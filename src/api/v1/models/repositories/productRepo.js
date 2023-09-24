@@ -63,10 +63,39 @@ const searchProductForBuyer = async ({ keyword = '' }) => {
   return searchedProduct
 }
 
+const findAllProductsForBuyer = async ({
+  filter = { isPublished: true }, limit = 50, page = 1, sort = 'ctime', select = ''
+}) => {
+  if (!filter?.isPublished) filter.isPublished = true
+  const skip = (page - 1) * limit
+  const sortBy = sort === 'ctime' ? { _id: -1 } : { _id: 1 }
+
+  const products = await productModel
+    .find(filter)
+    .sort(sortBy)
+    .skip(skip)
+    .limit(limit)
+    .select(select)
+    .lean()
+  return products
+}
+
+const findProductForBuyer = async ({
+  productId = '', select = ''
+}) => {
+  const product = await productModel
+    .findById(productId)
+    .select(select)
+    .lean()
+  return product
+}
+
 module.exports = {
   findAllDraftProductsForShop,
   findAllPublishedProductsForShop,
   publishProductForShop,
   unpublishProductForShop,
-  searchProductForBuyer
+  searchProductForBuyer,
+  findAllProductsForBuyer,
+  findProductForBuyer
 }

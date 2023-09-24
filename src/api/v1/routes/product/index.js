@@ -10,7 +10,9 @@ const errorAsyncHandler = require('../../../../core/errorAsyncHandler')
 
 const router = express.Router()
 
-router.use('/search', searchProductRouter)
+router.get('/search', searchProductRouter)
+router.get('/', errorAsyncHandler(productController.getAllProductsForBuyer))
+router.get('/:id', errorAsyncHandler(productController.getProductForBuyer))
 
 router.use(errorAsyncHandler(authenticate))
 

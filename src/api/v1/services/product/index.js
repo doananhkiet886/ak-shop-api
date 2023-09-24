@@ -41,11 +41,25 @@ const searchProductForBuyer = async ({ keyword }) => {
   return await productRepo.searchProductForBuyer({ keyword })
 }
 
+const findAllProductsForBuyer = async ({
+  filter, limit, page, sort, select
+}) => {
+  return await productRepo.findAllProductsForBuyer({
+    filter, limit, page, sort, select
+  })
+}
+
+const findProductForBuyer = async ({ productId, select }) => {
+  return await productRepo.findProductForBuyer({ productId, select })
+}
+
 module.exports = {
   createProduct,
   findAllDraftProductsForShop,
   findAllPublishedProductsForShop,
   publishProductForShop,
   unpublishProductForShop,
-  searchProductForBuyer
+  searchProductForBuyer,
+  findAllProductsForBuyer,
+  findProductForBuyer
 }
