@@ -65,7 +65,7 @@ class ProductController {
     const productId = req.params.id
 
     new SuccessResponse({
-      message: 'publish product successfully',
+      message: 'Publish product successfully',
       metadata: await productFactory.publishProductForShop({ productId, shopId })
     }).send(res)
   }
@@ -82,8 +82,23 @@ class ProductController {
     const productId = req.params.id
 
     new SuccessResponse({
-      message: 'publish product successfully',
+      message: 'Publish product successfully',
       metadata: await productFactory.unpublishProductForShop({ productId, shopId })
+    }).send(res)
+  }
+
+  /**
+ * @desc search product for user
+ * @route [GET] /api/v1/products/search/:keyword
+ * @param { String } keyword
+ * @returns { JSON }
+ */
+  async searchProductForUser(req, res) {
+    const { keyword } = req.params
+
+    new SuccessResponse({
+      message: 'Search product successfully',
+      metadata: await productFactory.searchProductForUser({ keyword })
     }).send(res)
   }
 }

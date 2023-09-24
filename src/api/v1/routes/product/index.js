@@ -5,9 +5,12 @@ const draftProductRouter = require('./draftProductRoute')
 const publishedProductRouter = require('./publishedProductRoute')
 const publishProductRouter = require('./publishProductRoute')
 const unpublishProductRouter = require('./unpublishProductRoute')
+const searchProductRouter = require('./searchProductRoute')
 const errorAsyncHandler = require('../../../../core/errorAsyncHandler')
 
 const router = express.Router()
+
+router.use('/search', searchProductRouter)
 
 router.use(errorAsyncHandler(authenticate))
 

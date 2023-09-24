@@ -37,10 +37,15 @@ const unpublishProductForShop = async ({ productId = '', shopId = '' }) => {
   return await productRepo.unpublishProductForShop({ productId, shopId })
 }
 
+const searchProductForUser = async ({ keyword }) => {
+  return await productRepo.searchProductForUser({ keyword })
+}
+
 module.exports = {
   createProduct,
   findAllDraftProductsForShop,
   findAllPublishedProductsForShop,
   publishProductForShop,
-  unpublishProductForShop
+  unpublishProductForShop,
+  searchProductForUser
 }
