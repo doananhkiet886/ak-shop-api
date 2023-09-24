@@ -24,6 +24,7 @@ const apiKeySchema = new Schema({
   }
 }, {
   timestamps: true,
+  versionKey: false,
   collection: COLLECTION_NAME
 })
 

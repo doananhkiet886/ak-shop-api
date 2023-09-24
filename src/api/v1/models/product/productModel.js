@@ -27,7 +27,7 @@ const productSchema = new Schema({
   type: {
     type: String,
     required: true,
-    enum: ['Electronics', 'Clothing', 'Furniture']
+    enum: ['Electronic', 'Clothing', 'Furniture']
   },
   shop: {
     type: Schema.Types.ObjectId,
@@ -64,6 +64,7 @@ const productSchema = new Schema({
   }
 }, {
   timestamps: true,
+  versionKey: false,
   collection: COLLECTION_NAME
 })
 

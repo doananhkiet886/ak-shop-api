@@ -58,6 +58,7 @@ const searchProductForBuyer = async ({ keyword = '' }) => {
     .sort({
       score: { $meta: 'textScore' }
     })
+    .select('-score')
     .lean()
 
   return searchedProduct
