@@ -1,6 +1,7 @@
 'use strict'
 
 const productModel = require('../../models/product/productModel')
+const { findOneAndUpdateFewFields } = require('../../helpers/mongooseHelper')
 
 class ProductService {
 
@@ -20,6 +21,19 @@ class ProductService {
 
   async createProduct(productId = '') {
     return await productModel.create({ ...this, _id: productId })
+  }
+
+  async updateProduct({ productId = '', shopId = '' }) {
+    const payload = this
+
+    return await findOneAndUpdateFewFields({
+      model: productModel,
+      filter: {
+        _id: productId,
+        shop: shopId
+      },
+      payload
+    })
   }
 }
 

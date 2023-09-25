@@ -53,6 +53,15 @@ const findProductForBuyer = async ({ productId, select }) => {
   return await productRepo.findProductForBuyer({ productId, select })
 }
 
+const updateProduct = async({ type, productId, shopId, payload = {} }) => {
+  const productClass = productRegister[type]
+  if (!productClass) throw new BadRequestError('Invalid product type')
+
+  return await new productClass(payload).updateProduct({
+    productId, shopId
+  })
+}
+
 module.exports = {
   createProduct,
   findAllDraftProductsForShop,
@@ -61,5 +70,6 @@ module.exports = {
   unpublishProductForShop,
   searchProductForBuyer,
   findAllProductsForBuyer,
-  findProductForBuyer
+  findProductForBuyer,
+  updateProduct
 }

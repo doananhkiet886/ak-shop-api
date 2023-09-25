@@ -88,12 +88,25 @@ class ProductController {
     }).send(res)
   }
 
+  async updateProduct(req, res) {
+    const productId = req.params.id
+    const { shopId, type } = req.query
+    const payload = req.body
+
+    new SuccessResponse({
+      message: 'Update product successfully',
+      metadata: await productFactory.updateProduct({
+        type, productId, shopId, payload
+      })
+    }).send(res)
+  }
+
   /**
    * @desc search product for buyer
    * @route [GET] /api/v1/products/search/:keyword
    * @param { String } keyword
    * @returns { JSON }
- */
+  */
   async searchProductForBuyer(req, res) {
     const { keyword } = req.params
 

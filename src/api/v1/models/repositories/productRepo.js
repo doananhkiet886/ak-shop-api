@@ -10,6 +10,11 @@ const queryProduct = async({ query = {}, skip = 0, limit = 50 }) => {
     .lean()
 }
 
+
+const findProductById = async (id) => {
+  return await productModel.findById(id).lean()
+}
+
 const findAllDraftProductsForShop = async ({ query, skip, limit }) => {
   return await queryProduct({ query, skip, limit })
 }
@@ -92,6 +97,7 @@ const findProductForBuyer = async ({
 }
 
 module.exports = {
+  findProductById,
   findAllDraftProductsForShop,
   findAllPublishedProductsForShop,
   publishProductForShop,

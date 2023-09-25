@@ -17,5 +17,6 @@ router.get('/published/all', errorAsyncHandler(productController.getAllPublished
 router.post('/', errorAsyncHandler(productController.createProduct))
 router.post('/publish/:id', errorAsyncHandler(productController.publishProductForShop))
 router.post('/unpublish/:id', errorAsyncHandler(productController.unpublishProductForShop))
+router.patch('/:id', errorAsyncHandler(productController.updateProduct))
 
 module.exports = router
