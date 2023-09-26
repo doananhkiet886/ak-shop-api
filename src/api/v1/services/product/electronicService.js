@@ -3,11 +3,15 @@ const ProductService = require('./productService')
 const { findOneAndUpdateFewFields } = require('../../helpers/mongooseHelper')
 const { BadRequestError } = require('../../../../core/errorResponse')
 class ElectronicService extends ProductService {
-  async createProduct() {
-    const newElectronic = await electronicModel.create({ ...this.attributes, shop: this.shop })
+  async createProduct(shopId = '') {
+    const newElectronic = await electronicModel.create({
+      ...this.attributes,
+      shop: shopId
+    })
+
     if (!newElectronic) throw new BadRequestError('Create electronic failure')
 
-    const newProduct = await super.createProduct(newElectronic._id)
+    const newProduct = await super.createProduct(shopId, newElectronic._id)
     if (!newProduct) throw new BadRequestError('Create product failure')
 
     return newProduct

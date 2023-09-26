@@ -1,14 +1,12 @@
 const clothingModel = require('../../models/product/clothingModel')
 const ProductService = require('./productService')
-const { findOneProductAndDelete } = require('./')
-const productRepo = require('../../models/repositories/productRepo')
 const { findOneAndUpdateFewFields } = require('../../helpers/mongooseHelper')
 const { BadRequestError } = require('../../../../core/errorResponse')
 class ClothingService extends ProductService {
-  async createProduct() {
+  async createProduct(shopId = '') {
     const newClothing = await clothingModel.create({
       ...this.attributes,
-      shop: this.shop
+      shop: shopId
     })
     if (!newClothing) throw new BadRequestError('Create clothing failure')
 

@@ -19,8 +19,12 @@ class ProductService {
     this.attributes = attributes
   }
 
-  async createProduct(productId = '') {
-    return await productModel.create({ ...this, _id: productId })
+  async createProduct(shopId = '', productId = '') {
+    return await productModel.create({
+      ...this,
+      _id: productId,
+      shop: shopId
+    })
   }
 
   async updateProduct({ productId = '', shopId = '' }) {

@@ -3,7 +3,8 @@
 const { CreatedResponse, SuccessResponse } = require('../../../core/successResponse')
 const productFactory = require('../services/product')
 const { createFilterObjectFromQueryObject } = require('../helpers/mongooseHelper')
-
+const requestHeaders = require('../utils/requestHeadersUtil')
+const { BadRequestError } = require('../../../core/errorResponse')
 class ProductController {
   /**
    * @desc create product
@@ -13,24 +14,28 @@ class ProductController {
    * @returns { JSON }
    */
   async createProduct(req, res) {
+    const shopId = req.headers[requestHeaders.SHOP_ID]
     const type = req.body.type
     const payload = req.body
+    if (!shopId || !type) new BadRequestError(`${requestHeaders.SHOP_ID} or Type missing`)
 
     new CreatedResponse({
       message: 'Create product successfully',
-      metadata: await productFactory.createProduct({ type, payload })
+      metadata: await productFactory.createProduct({ shopId, type, payload })
     }).send(res)
   }
 
   /**
    * @desc get all draft products by shopId
    * @route [GET] /api/v1/products/draft/all
+   * @param { String } shopId
    * @param { Number } skip
    * @param { Number } limit
    * @returns { JSON }
    */
   async getAllDraftProductsForShop(req, res) {
-    const { shopId } = req.body
+    const shopId = req.headers[requestHeaders.SHOP_ID]
+    if (!shopId) new BadRequestError(`${requestHeaders.SHOP_ID} missing`)
 
     new SuccessResponse({
       message: 'Get all draft product successfully',
@@ -46,7 +51,8 @@ class ProductController {
    * @returns { JSON }
    */
   async getAllPublishedProductsForShop(req, res) {
-    const { shopId } = req.body
+    const shopId = req.headers[requestHeaders.SHOP_ID]
+    if (!shopId) new BadRequestError(`${requestHeaders.SHOP_ID} missing`)
 
     new SuccessResponse({
       message: 'Get all published product successfully',
@@ -62,8 +68,9 @@ class ProductController {
    * @returns { JSON }
    */
   async publishProductForShop(req, res) {
-    const { shopId } = req.body
+    const shopId = req.headers[requestHeaders.SHOP_ID]
     const productId = req.params.id
+    if (!shopId || !productId) new BadRequestError(`${requestHeaders.SHOP_ID} or Product ID missing`)
 
     new SuccessResponse({
       message: 'Publish product successfully',
@@ -79,8 +86,9 @@ class ProductController {
    * @returns { JSON }
    */
   async unpublishProductForShop(req, res) {
-    const { shopId } = req.body
+    const shopId = req.headers[requestHeaders.SHOP_ID]
     const productId = req.params.id
+    if (!shopId || !productId) new BadRequestError(`${requestHeaders.SHOP_ID} or Product ID missing`)
 
     new SuccessResponse({
       message: 'Publish product successfully',
@@ -88,10 +96,21 @@ class ProductController {
     }).send(res)
   }
 
+  /**
+   * @desc update product
+   * @route [PATCH] /api/v1/products//:id?type=
+   * @param { String } type
+   * @param { String } productId
+   * @param { String } shopId
+   * @param { Object } payload
+   * @returns { JSON }
+   */
   async updateProduct(req, res) {
     const productId = req.params.id
-    const { shopId, type } = req.query
+    const type = req.query.type
+    const shopId = req.headers[requestHeaders.SHOP_ID]
     const payload = req.body
+    if (!shopId || !type) throw new BadRequestError('Shop ID or Type missing')
 
     new SuccessResponse({
       message: 'Update product successfully',
