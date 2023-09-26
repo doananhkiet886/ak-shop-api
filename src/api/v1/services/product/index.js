@@ -1,6 +1,6 @@
 const productTypes = require('./productTypes')
 const productRepo = require('../..//models/repositories/productRepo')
-const { BadRequestError } = require('../../../../core/errorResponse')
+const { BadRequestError, NotFoundError } = require('../../../../core/errorResponse')
 
 const productRegister = {}
 
@@ -30,11 +30,15 @@ const findAllPublishedProductsForShop = async ({ shopId = '', skip, limit }) => 
 }
 
 const publishProductForShop = async ({ productId = '', shopId = '' }) => {
-  return await productRepo.publishProductForShop({ productId, shopId })
+  const publishedProduct = await productRepo.publishProductForShop({ productId, shopId })
+  if (!publishedProduct) throw new NotFoundError('Invalid Product ID')
+  return publishedProduct
 }
 
 const unpublishProductForShop = async ({ productId = '', shopId = '' }) => {
-  return await productRepo.unpublishProductForShop({ productId, shopId })
+  const unpublishedProduct =  await productRepo.unpublishProductForShop({ productId, shopId })
+  if (!unpublishedProduct) throw new NotFoundError('Invalid Product ID')
+  return unpublishedProduct
 }
 
 const searchProductForBuyer = async ({ keyword }) => {

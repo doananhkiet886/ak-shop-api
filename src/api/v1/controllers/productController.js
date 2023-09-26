@@ -91,7 +91,7 @@ class ProductController {
     if (!shopId || !productId) new BadRequestError(`${requestHeaders.SHOP_ID} or Product ID missing`)
 
     new SuccessResponse({
-      message: 'Publish product successfully',
+      message: 'Unpublish product successfully',
       metadata: await productFactory.unpublishProductForShop({ productId, shopId })
     }).send(res)
   }

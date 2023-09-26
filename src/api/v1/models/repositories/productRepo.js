@@ -47,8 +47,8 @@ const unpublishProductForShop = async ({ productId = '', shopId = '' }) => {
   foundProduct.isDraft = true
   foundProduct.isPublished = false
 
-  const modifiedCount = await foundProduct.save()
-  return modifiedCount
+  const unpublishProduct = await foundProduct.save()
+  return unpublishProduct
 }
 
 const searchProductForBuyer = async ({ keyword = '' }) => {
