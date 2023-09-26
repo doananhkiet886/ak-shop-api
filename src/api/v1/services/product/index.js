@@ -42,7 +42,12 @@ const unpublishProductForShop = async ({ productId = '', shopId = '' }) => {
 }
 
 const searchProductForBuyer = async ({ keyword }) => {
-  return await productRepo.searchProductForBuyer({ keyword })
+  const foundProducts = await productRepo.searchProductForBuyer({ keyword })
+  const NO_ELEMENTS = 0
+  const isEmptyProducts = foundProducts.length === NO_ELEMENTS
+  if (isEmptyProducts) throw new NotFoundError('Not found product')
+
+  return foundProducts
 }
 
 const findAllProductsForBuyer = async ({
