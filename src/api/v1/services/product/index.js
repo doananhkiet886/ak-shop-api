@@ -36,7 +36,7 @@ const publishProductForShop = async ({ productId = '', shopId = '' }) => {
 }
 
 const unpublishProductForShop = async ({ productId = '', shopId = '' }) => {
-  const unpublishedProduct =  await productRepo.unpublishProductForShop({ productId, shopId })
+  const unpublishedProduct = await productRepo.unpublishProductForShop({ productId, shopId })
   if (!unpublishedProduct) throw new NotFoundError('Invalid Product ID')
   return unpublishedProduct
 }
@@ -54,16 +54,22 @@ const findAllProductsForBuyer = async ({
 }
 
 const findProductForBuyer = async ({ productId, select }) => {
-  return await productRepo.findProductForBuyer({ productId, select })
+  const foundProduct =  await productRepo.findProductForBuyer({ productId, select })
+  if (!foundProduct) throw new NotFoundError('Invalid Product ID')
+
+  return foundProduct
 }
 
 const updateProduct = async({ type, productId, shopId, payload = {} }) => {
   const productClass = productRegister[type]
   if (!productClass) throw new BadRequestError('Invalid product type')
 
-  return await new productClass(payload).updateProduct({
+  const updatedProduct = await new productClass(payload).updateProduct({
     productId, shopId
   })
+  if (!updatedProduct) throw new NotFoundError('Invalid Product ID')
+
+  return updatedProduct
 }
 
 module.exports = {
