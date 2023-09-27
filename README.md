@@ -1,10 +1,10 @@
-# AK Shop - Ecommerce
+# AK Shop API - Ecommerce
 
 ## Table Of Contents
-- [AK Shop - Ecommerce](#ak-shop---ecommerce)
+- [AK Shop API - Ecommerce](#ak-shop-api---ecommerce)
   - [Table Of Contents](#table-of-contents)
   - [Getting Started](#getting-started)
-  - [Routes](#routes)
+  - [APIs](#apis)
     - [1. Authentication](#1-authentication)
       - [Sign Up](#sign-up)
       - [Sign In](#sign-in)
@@ -43,7 +43,7 @@ Start Server
 
   ```
 
-## Routes
+## APIs
 
 ### 1. Authentication
 
