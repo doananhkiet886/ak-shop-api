@@ -18,16 +18,18 @@ const productSchema = new Schema({
   },
   price: {
     type: Number,
-    required: true
+    required: true,
+    min: 0
   },
   quantity: {
     type: Number,
-    required: true
+    required: true,
+    min: 0
   },
   type: {
     type: String,
     required: true,
-    enum: ['Electronic', 'Clothing', 'Furniture']
+    enum: ['Electronic', 'Clothing']
   },
   shop: {
     type: Schema.Types.ObjectId,
@@ -35,7 +37,8 @@ const productSchema = new Schema({
     ref: 'shop'
   },
   slug: {
-    type: String
+    type: String,
+    required: true
   },
   ratingsAverage: {
     type: Number,
