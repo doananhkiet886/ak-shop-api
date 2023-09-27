@@ -1,5 +1,28 @@
 # AK Shop - Ecommerce
 
+## Table Of Contents
+- [AK Shop - Ecommerce](#ak-shop---ecommerce)
+  - [Table Of Contents](#table-of-contents)
+  - [Getting Started](#getting-started)
+  - [Routes](#routes)
+    - [1. Authentication](#1-authentication)
+      - [Sign Up](#sign-up)
+      - [Sign In](#sign-in)
+      - [Refresh Token](#refresh-token)
+      - [Sign Out](#sign-out)
+    - [2. Shop](#2-shop)
+      - [Create Shop](#create-shop)
+    - [3. Product](#3-product)
+      - [For Shop](#for-shop)
+        - [Get all draft products](#get-all-draft-products)
+        - [Get all published products](#get-all-published-products)
+        - [Create products](#create-products)
+        - [Publish product](#publish-product)
+        - [UnPublish product](#unpublish-product)
+        - [Update product](#update-product)
+      - [For Buyer](#for-buyer)
+
+
 ## Getting Started
 
 Install packages
