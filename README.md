@@ -5,6 +5,12 @@
   - [Table Of Contents](#table-of-contents)
   - [Getting Started](#getting-started)
   - [APIs](#apis)
+    - [0. Options](#0-options)
+      - [Filter](#filter)
+      - [Select fields](#select-fields)
+      - [Paginate](#paginate)
+      - [Sort](#sort)
+      - [Full text search](#full-text-search)
     - [1. Authentication](#1-authentication)
       - [Sign Up](#sign-up)
       - [Sign In](#sign-in)
@@ -48,6 +54,38 @@ Start Server
 
 ## APIs
 
+### 0. Options
+#### Filter
+
+  ```
+  ?<field>=<value>
+  ```
+#### Select fields
+  Use `field=value`
+  ```
+  ?<field>=<value>
+  ```
+#### Paginate
+  Use _page and _limit to paginate returned data.
+
+  ```
+  ?_page=<number>&_limit=<number>
+  ```
+#### Sort
+  Use _sort and _order.
+
+  ```
+  ?_sort=<field>&_order=<order_value>
+  ```
+
+  - _order receives values: asc, desc (default asc)
+
+#### Full text search
+  Use `_q`
+  ```
+  ?_q=<keyword>
+  ```
+
 ### 1. Authentication
 
 #### Sign Up
@@ -57,7 +95,7 @@ Start Server
 ```
 
 - Method: POST
-- HEADER:
+- Header:
   - x-api-key
 - Body:
   
@@ -78,7 +116,7 @@ Start Server
 ```
 
 - Method: POST
-- HEADER:
+- Header:
   - x-api-key
 - Body:
   
@@ -89,7 +127,6 @@ Start Server
     "password":
   }
   ```
-  
 
 #### Refresh Token
 
@@ -98,7 +135,7 @@ Start Server
 ```
 
 - Method: POST
-- HEADER:
+- Header:
   - x-api-key
   - x-client-id
   - authorization
@@ -112,7 +149,7 @@ Start Server
 ```
 
 - Method: POST
-- HEADER:
+- Header:
   - x-api-key
   - x-client-id
   - authorization
