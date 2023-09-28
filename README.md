@@ -21,6 +21,9 @@
         - [UnPublish product](#unpublish-product)
         - [Update product](#update-product)
       - [For Buyer](#for-buyer)
+        - [Get all products](#get-all-products)
+        - [Get product](#get-product)
+        - [Search product](#search-product)
 
 
 ## Getting Started
@@ -246,7 +249,7 @@ Start Server
   ```
 
   - Method: POST
-  - HEADER:
+  - Header:
     - x-api-key
     - x-client-id
     - authorization
@@ -260,7 +263,7 @@ Start Server
   ```
   
   - Method: POST
-  - HEADER:
+  - Header:
     - x-api-key
     - x-client-id
     - authorization
@@ -274,7 +277,7 @@ Start Server
   ```
 
   - Method: PATCH
-  - HEADER:
+  - Header:
     - x-api-key
     - x-client-id
     - authorization
@@ -282,5 +285,37 @@ Start Server
   - Body: json, fields of the product
 
 #### For Buyer
+##### Get all products
+
+  ```
+  /api/<version>/products/
+  ```
+
+  - Method: GET
+  - Header:
+    - x-api-key
+  - Body: none
+
+##### Get product
+
+  ```
+  /api/<version>/products/<productId>
+  ```
+
+  - Method: GET
+  - HEADER:
+    - x-api-key
+  - Body: none
+
+##### Search product
+
+  ```
+  /api/<version>/products/search/<keyword>
+  ```
+
+  - Method: GET
+  - Header:
+    - x-api-key
+  - Body: none
 
 > Copyright © 2023 by Doan Anh Kiet
