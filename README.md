@@ -56,63 +56,64 @@ Start Server
 
 ### 0. Options for Plural APIs
 #### Filter
-  ```
-  ?<field>=<value>
-  ```
+  - Use:
+    ```
+    ?<field>=<value>
+    ```
 
-  Example:
-  ```
-  ?name=Alexander&gender=23
-  ```
+  - Example:
+  
+    ```
+    ?name=Alexander&gender=23
+    ```
 #### Select fields
-  Use `_select`
-  ```
-  ?_select=<fields>
-  ```
-  - `<fields>`:
-    - Include field: use 'field name'
-    - Except field: add '-' character before the 'field name'
+  - Use `_select`
+    ```
+    ?_select=<fields>
+    ```
+    - `<fields>`:
+      - Include field: use 'field name'
+      - Except field: add '-' character before the 'field name'
 
-  Example:
-  ```
-  ?_select=description // include 'description' field
-  ?_select=-description // except 'description' field
-  ```
+  - Example:
+    ```
+    ?_select=description // include 'description' field
+    ?_select=-description // except 'description' field
+    ```
 
 #### Paginate
-  Use _page and _limit to paginate returned data.
+  - Use _page and _limit to paginate returned data.
+    ```
+    ?_page=<number>&_limit=<number>
+    ```
 
-  ```
-  ?_page=<number>&_limit=<number>
-  ```
-
-  Example:
-  ```
-  ?_page=3&_limit=100
-  ```
+  - Example:
+    ```
+    ?_page=3&_limit=100
+    ```
 
 #### Sort
-  Use _sort and _order.
-  ```
-  ?_sort=<field>&_order=<order_value>
-  ```
-  - _order receives values: asc, desc (default asc)
+  - Use _sort and _order.
+    ```
+    ?_sort=<field>&_order=<order_value>
+    ```
+    - _order receives values: asc, desc (default asc)
 
-  Example:
-  ```
-  ?_sort=name&_order=desc
-  ```
+  - Example:
+    ```
+    ?_sort=name&_order=desc
+    ```
 
 #### Full text search
-  Use `_q`
-  ```
-  ?_q=<keyword>
-  ```
+  - Use `_q`
+    ```
+    ?_q=<keyword>
+    ```
 
-  Example:
-  ```
-  ?_q=smartphone
-  ```
+  - Example:
+    ```
+    ?_q=smartphone
+    ```
 
 ### 1. Authentication
 
