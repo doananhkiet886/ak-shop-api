@@ -8,7 +8,6 @@ class ElectronicService extends ProductService {
       ...this.attributes,
       shop: shopId
     })
-
     if (!newElectronic) throw new BadRequestError('Create electronic failure')
 
     const newProduct = await super.createProduct(shopId, newElectronic._id)

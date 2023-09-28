@@ -10,7 +10,6 @@ const queryProduct = async(filter = {}, skip = 0, limit = 50) => {
     .lean()
 }
 
-
 const findProductById = async (id) => {
   return await productModel.findById(id).lean()
 }

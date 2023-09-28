@@ -37,8 +37,7 @@ const productSchema = new Schema({
     ref: 'shop'
   },
   slug: {
-    type: String,
-    required: true
+    type: String
   },
   ratingsAverage: {
     type: Number,

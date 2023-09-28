@@ -15,7 +15,6 @@ productTypes.forEach(({ type, productClass }) => {
 const createProduct = async (shopId = '', type = '', payload = {}) => {
   const productClass = productRegister[type]
   if (!productClass) throw new BadRequestError('Invalid product type')
-
   return await new productClass(payload).createProduct(shopId)
 }
 
