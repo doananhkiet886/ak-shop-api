@@ -59,11 +59,24 @@ Start Server
   ```
   ?<field>=<value>
   ```
+
+  Example:
+  ```
+  ?name=Alexander&gender=23
+  ```
 #### Select fields
   Use `_select`
-
   ```
-  ?_select=<field>
+  ?_select=<fields>
+  ```
+  - `<fields>`:
+    - Include field: use 'field name'
+    - Except field: add '-' character before the 'field name'
+
+  Example:
+  ```
+  ?_select=description // include 'description' field
+  ?_select=-description // except 'description' field
   ```
 
 #### Paginate
@@ -72,19 +85,33 @@ Start Server
   ```
   ?_page=<number>&_limit=<number>
   ```
+
+  Example:
+  ```
+  ?_page=3&_limit=100
+  ```
+
 #### Sort
   Use _sort and _order.
-
   ```
   ?_sort=<field>&_order=<order_value>
   ```
-
   - _order receives values: asc, desc (default asc)
+
+  Example:
+  ```
+  ?_sort=name&_order=desc
+  ```
 
 #### Full text search
   Use `_q`
   ```
   ?_q=<keyword>
+  ```
+
+  Example:
+  ```
+  ?_q=smartphone
   ```
 
 ### 1. Authentication
