@@ -11,11 +11,11 @@ const convertValueToRegExOfKeyFromObject = (object = {}, flags = '') => {
   })
 }
 
-const isNormalObject = (obj) => {
+const isNormalObject = (obj = {}) => {
   return obj === Object(obj) && !Array.isArray(obj)
 }
 
-const flattenObject = (obj = {}, parent, result = {}) => {
+const flattenObject = (obj = {}, parent = '', result = {}) => {
   for (const key in obj) {
     const propName = parent ? `${parent}.${key}` : key
 
@@ -28,7 +28,7 @@ const flattenObject = (obj = {}, parent, result = {}) => {
   return result
 }
 
-const removeUndefinedNullField = (obj) => {
+const removeUndefinedNullField = (obj = {}) => {
   return Object.fromEntries(
     Object.entries(obj)
       // eslint-disable-next-line no-unused-vars

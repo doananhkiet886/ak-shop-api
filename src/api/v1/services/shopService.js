@@ -6,7 +6,7 @@ const userService = require('./userService')
 const { NotFoundError, InternalServerError } = require('../../../core/errorResponse')
 
 class ShopService {
-  static async createShop({ userId = '', name = '' }) {
+  static async createShop(userId = '', name = '') {
     console.log({ userId })
     const foundUser = await userService.findById(userId)
     if (!foundUser) throw new NotFoundError('Invalid user id')

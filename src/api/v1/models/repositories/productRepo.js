@@ -1,8 +1,8 @@
 const productModel = require('../product/productModel')
 
-const queryProduct = async({ query = {}, skip = 0, limit = 50 }) => {
+const queryProduct = async(filter = {}, skip = 0, limit = 50) => {
   return await productModel
-    .find(query)
+    .find(filter)
     .populate({ path: 'shop', select: 'name -_id' })
     .sort({ updatedAt: -1 })
     .skip(skip)
@@ -15,15 +15,15 @@ const findProductById = async (id) => {
   return await productModel.findById(id).lean()
 }
 
-const findAllDraftProductsForShop = async ({ query, skip, limit }) => {
-  return await queryProduct({ query, skip, limit })
+const findAllDraftProductsForShop = async (filter, skip, limit) => {
+  return await queryProduct(filter, skip, limit)
 }
 
-const findAllPublishedProductsForShop = async ({ query, skip, limit }) => {
-  return await queryProduct({ query, skip, limit })
+const findAllPublishedProductsForShop = async (filter, skip, limit) => {
+  return await queryProduct(filter, skip, limit)
 }
 
-const publishProductForShop = async ({ productId = '', shopId = '' }) => {
+const publishProductForShop = async (productId = '', shopId = '') => {
   const foundProduct = await productModel.findOne({
     _id: productId,
     shop: shopId
@@ -37,7 +37,7 @@ const publishProductForShop = async ({ productId = '', shopId = '' }) => {
   return modifiedCount
 }
 
-const unpublishProductForShop = async ({ productId = '', shopId = '' }) => {
+const unpublishProductForShop = async (productId = '', shopId = '') => {
   const foundProduct = await productModel.findOne({
     _id: productId,
     shop: shopId
@@ -51,7 +51,7 @@ const unpublishProductForShop = async ({ productId = '', shopId = '' }) => {
   return unpublishProduct
 }
 
-const searchProductForBuyer = async ({ keyword = '' }) => {
+const searchProductForBuyer = async (keyword = '') => {
   const searchRegEx = new RegExp(keyword)
   const searchedProduct = await productModel
     .find({
@@ -69,9 +69,10 @@ const searchProductForBuyer = async ({ keyword = '' }) => {
   return searchedProduct
 }
 
-const findAllProductsForBuyer = async ({
-  filter = { isPublished: true }, limit = 50, page = 1, sort = 'ctime', select = ''
-}) => {
+const findAllProductsForBuyer = async (
+  filter = { isPublished: true }, limit = 50,
+  page = 1, sort = 'ctime', select = ''
+) => {
   if (!filter?.isPublished) filter.isPublished = true
   const skip = (page - 1) * limit
   const sortBy = sort === 'ctime' ? { _id: -1 } : { _id: 1 }
@@ -86,9 +87,7 @@ const findAllProductsForBuyer = async ({
   return products
 }
 
-const findProductForBuyer = async ({
-  productId = '', select = ''
-}) => {
+const findProductForBuyer = async (productId = '', select = '') => {
   const product = await productModel
     .findById(productId)
     .select(select)

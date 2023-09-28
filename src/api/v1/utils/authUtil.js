@@ -17,7 +17,12 @@ const createKeyPairRsa = () => {
   })
 }
 
-const createTokenPair = ({ payload = { userId: '', username: '' }, privateKey, accessTokenExpiresIn = '1 days', refreshTokenExpiresIn = '2 days' }) => {
+const createTokenPair = (
+  payload = { userId: '', username: '' },
+  privateKey,
+  accessTokenExpiresIn = '1h',
+  refreshTokenExpiresIn = '90d'
+) => {
   const accessToken = jwt.sign(payload, privateKey, {
     algorithm: 'RS256',
     expiresIn: accessTokenExpiresIn
@@ -31,7 +36,7 @@ const createTokenPair = ({ payload = { userId: '', username: '' }, privateKey, a
   return { accessToken, refreshToken }
 }
 
-const verifyToken = ({ token, secretOrPublicKey }) => {
+const verifyToken = (token = '', secretOrPublicKey) => {
   return jwt.verify(token, secretOrPublicKey)
 }
 

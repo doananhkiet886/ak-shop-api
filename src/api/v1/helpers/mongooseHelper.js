@@ -10,10 +10,7 @@ const getFilterKeysFromQueryObject = (queryObject = {}) => {
   return keys.filter((key) => key[0] !== '_')
 }
 
-const createFilterObjectFromQueryObject = ({
-  queryObject = {},
-  flags = 'gi'
-}) => {
+const createFilterObjectFromQueryObject = (queryObject = {}, flags = 'gi') => {
   const filterKeys = getFilterKeysFromQueryObject(queryObject)
   const filterObject = getDataInfo(queryObject, filterKeys)
 
@@ -26,7 +23,7 @@ const addSelects = ({ sourceSelect = '', selects = [] }) => {
   return sourceSelect.split(' ').concat(selects).join(' ')
 }
 
-const findOneAndUpdateFewFields = async ({ model, filter = {}, payload = {}, isNew = true }) => {
+const findOneAndUpdateFewFields = async (model, filter = {}, payload = {}, isNew = true) => {
   payload = removeUndefinedNullField(flattenObject(payload))
   return await model.findOneAndUpdate(filter, payload, { new: isNew })
 }

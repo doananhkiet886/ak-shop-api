@@ -27,17 +27,14 @@ class ProductService {
     })
   }
 
-  async updateProduct({ productId = '', shopId = '' }) {
+  async updateProduct(productId = '', shopId = '') {
+    const filter = {
+      _id: productId,
+      shop: shopId
+    }
     const payload = this
 
-    return await findOneAndUpdateFewFields({
-      model: productModel,
-      filter: {
-        _id: productId,
-        shop: shopId
-      },
-      payload
-    })
+    return await findOneAndUpdateFewFields(productModel, filter, payload)
   }
 }
 

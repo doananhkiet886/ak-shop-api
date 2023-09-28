@@ -11,29 +11,16 @@ class UserService {
     return await userModel.findById(id).lean()
   }
 
-  static async createUser({
-    lastName,
-    firstName,
-    gender,
-    dateOfBirth,
-    address,
-    phoneNumber,
-    email,
-    username,
-    password
-  }) {
+  static async createUser(requestBody = {}) {
+    const {
+      lastName, firstName, gender,
+      dateOfBirth, address, phoneNumber,
+      email, username, password
+    } = requestBody
+
     return await userModel.create({
-      lastName,
-      firstName,
-      gender,
-      dateOfBirth,
-      address,
-      phoneNumber,
-      email,
-      account: {
-        username,
-        password
-      }
+      lastName, firstName, gender, dateOfBirth,
+      address, phoneNumber, email, account: { username, password }
     })
   }
 }

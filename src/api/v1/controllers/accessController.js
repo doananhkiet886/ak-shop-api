@@ -24,17 +24,17 @@ class AccessController {
   async signOut(req, res) {
     new ResetContentResponse({
       message: 'Sign out successfully',
-      metadata: await accessService.signOut({ keyToken: req.keyToken })
+      metadata: await accessService.signOut(req.keyToken)
     }).send(res)
   }
 
   async refreshToken(req, res) {
     new OkResponse({
-      metadata: await accessService.handleRefreshToken({
-        keyToken: req.keyToken,
-        user: req.user,
-        refreshToken: req.refreshToken
-      })
+      metadata: await accessService.handleRefreshToken(
+        req.keyToken,
+        req.user,
+        req.refreshToken
+      )
     }).send(res)
   }
 }

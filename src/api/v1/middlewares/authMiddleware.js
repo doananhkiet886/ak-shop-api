@@ -47,10 +47,7 @@ class AuthMiddleware {
     const refreshToken = req.headers[REQUEST_HEADERS.REFRESH_TOKEN]
     if (refreshToken) {
       try {
-        const decodedUser = verifyToken({
-          token: refreshToken,
-          secretOrPublicKey: foundKeyToken.publicKey
-        })
+        const decodedUser = verifyToken(refreshToken, foundKeyToken.publicKey)
 
         if (userId !== decodedUser.userId)
           throw new UnAuthorizedError('Invalid user id')
@@ -83,10 +80,7 @@ class AuthMiddleware {
     if (!foundUser) throw new UnAuthorizedError(`Invalid ${REQUEST_HEADERS.CLIENT_ID}`)
 
     try {
-      const decodedUser = verifyToken({
-        token: accessToken,
-        secretOrPublicKey: foundKeyToken.publicKey
-      })
+      const decodedUser = verifyToken(accessToken, foundKeyToken.publicKey)
 
       const match = userId === decodedUser.userId
       if (!match) throw new UnAuthorizedError('Invalid user id')

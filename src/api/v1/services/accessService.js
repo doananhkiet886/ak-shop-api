@@ -15,49 +15,38 @@ const {
 } = require('../../../configs/environmentConfig')
 
 class AccessService {
-  static async signUp({
-    lastName,
-    firstName,
-    gender,
-    dateOfBirth,
-    address,
-    phoneNumber,
-    email,
-    username,
-    password
-  }) {
+  static async signUp(requestBody = {}) {
+    const {
+      lastName, firstName, gender,
+      dateOfBirth, address, phoneNumber,
+      email, username, password
+    } = requestBody
     const user = await userService.findByUsername(username)
     if (user) throw new ConflictError('User already exists')
     const passwordHash = await bcrypt.hash(password, 10)
 
     const newUser = await userService.createUser({
-      lastName,
-      firstName,
-      gender,
-      dateOfBirth,
-      address,
-      phoneNumber,
-      email,
-      username,
-      password: passwordHash
+      lastName, firstName, gender,
+      dateOfBirth, address, phoneNumber,
+      email, username, password: passwordHash
     })
     if (!newUser) throw new InternalServerError('Sign up failure')
 
     const payload = { userId: newUser._id, username }
     const { publicKey, privateKey } = createKeyPairRsa()
-    const { accessToken, refreshToken } = createTokenPair({
+    const { accessToken, refreshToken } = createTokenPair(
       payload,
       privateKey,
-      accessTokenExpiresIn: accessTokenLife,
-      refreshTokenExpiresIn: refreshTokenLife
-    })
+      accessTokenLife,
+      refreshTokenLife
+    )
 
-    const newKeyToken = await keyTokenService.createKeyToken({
-      userId: newUser._id,
+    const newKeyToken = await keyTokenService.createKeyToken(
+      newUser._id,
       publicKey,
       privateKey,
       refreshToken
-    })
+    )
     if (!newKeyToken) throw new InternalServerError('Automatic sign in failure')
 
     return {
@@ -69,7 +58,8 @@ class AccessService {
     }
   }
 
-  static async signIn({ username = '', password = '' }) {
+  static async signIn(requestBody = {}) {
+    const { username = '', password = '' } = requestBody
     const foundUser = await userService.findByUsername(username)
     if (!foundUser) throw new UnAuthorizedError()
 
@@ -81,19 +71,19 @@ class AccessService {
 
     if (!foundKeyToken) {
       const { publicKey, privateKey }= createKeyPairRsa()
-      const { accessToken, refreshToken } = createTokenPair({
+      const { accessToken, refreshToken } = createTokenPair(
         payload,
         privateKey,
-        accessTokenExpiresIn: accessTokenLife,
-        refreshTokenExpiresIn: refreshTokenLife
-      })
+        accessTokenLife,
+        refreshTokenLife
+      )
 
-      const newKeyToken = await keyTokenService.createKeyToken({
-        userId: foundUser._id,
+      const newKeyToken = await keyTokenService.createKeyToken(
+        foundUser._id,
         publicKey,
         privateKey,
         refreshToken
-      })
+      )
       if (!newKeyToken) throw new InternalServerError()
 
       return {
@@ -105,17 +95,17 @@ class AccessService {
       }
     }
 
-    const { accessToken, refreshToken } = createTokenPair({
+    const { accessToken, refreshToken } = createTokenPair(
       payload,
-      privateKey: foundKeyToken.privateKey,
-      accessTokenExpiresIn: accessTokenLife,
-      refreshTokenExpiresIn: refreshTokenLife
-    })
+      foundKeyToken.privateKey,
+      accessTokenLife,
+      refreshTokenLife
+    )
 
-    const { acknowledged } = await keyTokenService.updateKeyToken({
-      filter: { _id: foundKeyToken._id },
-      update: { refreshToken }
-    })
+    const { acknowledged } = await keyTokenService.updateKeyToken(
+      { _id: foundKeyToken._id },
+      { refreshToken }
+    )
     if (!acknowledged) throw new InternalServerError()
 
     return {
@@ -127,26 +117,27 @@ class AccessService {
     }
   }
 
-  static async signOut({ keyToken = {} }) {
-    const { acknowledged } = await keyTokenService.deleteById(keyToken._id)
+  static async signOut(keyToken = {}) {
+    const { _id } = keyToken
+    const { acknowledged } = await keyTokenService.deleteById(_id)
     if (!acknowledged) throw new InternalServerError('Sign out failure')
 
     return {}
   }
 
-  async handleRefreshToken({ keyToken = {}, user = {}, refreshToken = '' }) {
+  async handleRefreshToken(keyToken = {}, user = {}, refreshToken = '') {
     const { userId, username } = user
+    const payload = { userId, username }
+    const tokens = createTokenPair(
+      payload,
+      keyToken.privateKey,
+      accessTokenLife,
+      refreshTokenLife
+    )
 
-    const tokens = createTokenPair({
-      payload: { userId, username },
-      privateKey: keyToken.privateKey,
-      accessTokenExpiresIn: accessTokenLife,
-      refreshTokenExpiresIn: refreshTokenLife
-    })
-
-    await keyTokenService.updateKeyToken({
-      filter: { _id: keyToken._id },
-      update: {
+    await keyTokenService.updateKeyToken(
+      { _id: keyToken._id },
+      {
         $set: {
           refreshToken: tokens.refreshToken
         },
@@ -154,7 +145,7 @@ class AccessService {
           refreshTokensUsed: refreshToken
         }
       }
-    })
+    )
 
     const foundUser = await userService.findById(userId)
     if (!foundUser) throw new NotFoundError('Not found user')

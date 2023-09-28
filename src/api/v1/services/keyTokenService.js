@@ -5,7 +5,7 @@ const keyTokenModel = require('../models/keyTokenModel')
 const { MyError } = require('../../../core/errorResponse')
 
 class KeyTokenService {
-  static async createKeyToken({ userId = '', publicKey, privateKey, refreshToken }) {
+  static async createKeyToken(userId = '', publicKey, privateKey, refreshToken = '') {
     return await keyTokenModel.create({
       userId: new Types.ObjectId(userId),
       publicKey,
@@ -38,10 +38,7 @@ class KeyTokenService {
     }
   }
 
-  static async updateKeyToken({
-    filter = {},
-    update = {}
-  }) {
+  static async updateKeyToken(filter = {}, update = {}) {
     return await keyTokenModel.updateOne(filter, update)
   }
 

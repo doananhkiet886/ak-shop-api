@@ -21,7 +21,7 @@ class ProductController {
 
     new CreatedResponse({
       message: 'Create product successfully',
-      metadata: await productFactory.createProduct({ shopId, type, payload })
+      metadata: await productFactory.createProduct(shopId, type, payload)
     }).send(res)
   }
 
@@ -39,7 +39,7 @@ class ProductController {
 
     new SuccessResponse({
       message: 'Get all draft product successfully',
-      metadata: await productFactory.findAllDraftProductsForShop({ shopId })
+      metadata: await productFactory.findAllDraftProductsForShop(shopId)
     }).send(res)
   }
 
@@ -56,7 +56,7 @@ class ProductController {
 
     new SuccessResponse({
       message: 'Get all published product successfully',
-      metadata: await productFactory.findAllPublishedProductsForShop({ shopId })
+      metadata: await productFactory.findAllPublishedProductsForShop(shopId)
     }).send(res)
   }
 
@@ -74,7 +74,7 @@ class ProductController {
 
     new SuccessResponse({
       message: 'Publish product successfully',
-      metadata: await productFactory.publishProductForShop({ productId, shopId })
+      metadata: await productFactory.publishProductForShop(productId, shopId)
     }).send(res)
   }
 
@@ -92,7 +92,7 @@ class ProductController {
 
     new SuccessResponse({
       message: 'Unpublish product successfully',
-      metadata: await productFactory.unpublishProductForShop({ productId, shopId })
+      metadata: await productFactory.unpublishProductForShop(productId, shopId)
     }).send(res)
   }
 
@@ -114,9 +114,9 @@ class ProductController {
 
     new SuccessResponse({
       message: 'Update product successfully',
-      metadata: await productFactory.updateProduct({
+      metadata: await productFactory.updateProduct(
         type, productId, shopId, payload
-      })
+      )
     }).send(res)
   }
 
@@ -131,7 +131,7 @@ class ProductController {
 
     new SuccessResponse({
       message: 'Search product successfully',
-      metadata: await productFactory.searchProductForBuyer({ keyword })
+      metadata: await productFactory.searchProductForBuyer(keyword)
     }).send(res)
   }
 
@@ -148,13 +148,13 @@ class ProductController {
  */
   async getAllProductsForBuyer(req, res) {
     const { _limit, _page, _sort, _select } = req.query
-    const filter = createFilterObjectFromQueryObject({ queryObject: req.query })
+    const filter = createFilterObjectFromQueryObject(req.query)
 
     new SuccessResponse({
       message: 'Get all products successfully',
-      metadata: await productFactory.findAllProductsForBuyer({
-        filter, limit: _limit, page: _page, sort:_sort, select: _select
-      })
+      metadata: await productFactory.findAllProductsForBuyer(
+        filter, _limit, _page, _sort, _select
+      )
     }).send(res)
   }
 
@@ -171,10 +171,7 @@ class ProductController {
 
     new SuccessResponse({
       message: 'Get product successfully',
-      metadata: await productFactory.findProductForBuyer({
-        productId: id,
-        select: _select
-      })
+      metadata: await productFactory.findProductForBuyer(id, _select)
     }).send(res)
   }
 }

@@ -17,7 +17,7 @@ class ElectronicService extends ProductService {
     return newProduct
   }
 
-  async updateProduct({ productId = '', shopId = '' }) {
+  async updateProduct(productId = '', shopId = '') {
     let payload = this.attributes
 
     if (payload) {
@@ -31,9 +31,7 @@ class ElectronicService extends ProductService {
       })
     }
 
-    const updatedProduct = await super.updateProduct({
-      productId, shopId
-    })
+    const updatedProduct = await super.updateProduct(productId, shopId)
     return updatedProduct
   }
 }
