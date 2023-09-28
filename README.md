@@ -5,7 +5,7 @@
   - [Table Of Contents](#table-of-contents)
   - [Getting Started](#getting-started)
   - [APIs](#apis)
-    - [0. Options](#0-options)
+    - [0. Options for Plural APIs](#0-options-for-plural-apis)
       - [Filter](#filter)
       - [Select fields](#select-fields)
       - [Paginate](#paginate)
@@ -54,17 +54,18 @@ Start Server
 
 ## APIs
 
-### 0. Options
+### 0. Options for Plural APIs
 #### Filter
-
   ```
   ?<field>=<value>
   ```
 #### Select fields
-  Use `field=value`
+  Use `_select`
+
   ```
-  ?<field>=<value>
+  ?_select=<field>
   ```
+
 #### Paginate
   Use _page and _limit to paginate returned data.
 
