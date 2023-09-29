@@ -2,7 +2,6 @@
 
 const { CreatedResponse, SuccessResponse } = require('../../../core/successResponse')
 const productFactory = require('../services/product')
-const { createFilterObjectFromQueryObject } = require('../helpers/mongooseHelper')
 const requestHeaders = require('../utils/requestHeadersUtil')
 const { BadRequestError } = require('../../../core/errorResponse')
 class ProductController {

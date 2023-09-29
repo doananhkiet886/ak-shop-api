@@ -1,6 +1,5 @@
 const productModel = require('../product/productModel')
 const { query } = require('../../helpers/mongooseHelper')
-const { addSelects } = require('../../helpers/mongooseHelper')
 
 const populate = { path: 'shop', select: 'name -_id' }
 
