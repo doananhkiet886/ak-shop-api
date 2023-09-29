@@ -28,6 +28,7 @@ class AccessController {
     }).send(res)
   }
 
+  // [POST] /api/v1/access/refresh-token
   async refreshToken(req, res) {
     new OkResponse({
       metadata: await accessService.handleRefreshToken(

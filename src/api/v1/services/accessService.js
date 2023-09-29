@@ -125,7 +125,7 @@ class AccessService {
     return {}
   }
 
-  async handleRefreshToken(keyToken = {}, user = {}, refreshToken = '') {
+  static async handleRefreshToken(keyToken = {}, user = {}, refreshToken = '') {
     const { userId, username } = user
     const payload = { userId, username }
     const tokens = createTokenPair(

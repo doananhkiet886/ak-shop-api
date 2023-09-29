@@ -18,14 +18,17 @@ const createProduct = async (shopId = '', type = '', payload = {}) => {
   return await new productClass(payload).createProduct(shopId)
 }
 
-const findAllDraftProductsForShop = async (shopId = '', skip = 0, limit = 50) => {
-  const filter = { shop: shopId, isDraft: true }
-  return await productRepo.findAllDraftProductsForShop(filter, skip, limit)
+const findAllDraftProductsForShop = async (shopId = '', { filter, selector, pagination, sorter }) => {
+  filter.shop = shopId,
+  filter.isDraft = true
+  return await productRepo.findAllDraftProductsForShop({ filter, selector, pagination, sorter })
 }
 
-const findAllPublishedProductsForShop = async (shopId = '', skip = 0, limit = 50) => {
-  const filter = { shop: shopId, isPublished: true }
-  return await productRepo.findAllPublishedProductsForShop(filter, skip, limit)
+const findAllPublishedProductsForShop = async (shopId = '', { filter, selector, pagination, sorter }) => {
+  filter.shop = shopId,
+  filter.isDraft = true
+
+  return await productRepo.findAllPublishedProductsForShop({ filter, selector, pagination, sorter })
 }
 
 const publishProductForShop = async (productId = '', shopId = '') => {
@@ -40,8 +43,8 @@ const unpublishProductForShop = async (productId = '', shopId = '') => {
   return unpublishedProduct
 }
 
-const searchProductForBuyer = async (keyword = '') => {
-  const foundProducts = await productRepo.searchProductForBuyer(keyword)
+const searchProductForBuyer = async (keyword, { filter, selector, pagination }) => {
+  const foundProducts = await productRepo.searchProductForBuyer(keyword, { filter, selector, pagination })
   const NO_ELEMENTS = 0
   const isEmptyProducts = foundProducts.length === NO_ELEMENTS
   if (isEmptyProducts) throw new NotFoundError('Not found product')
@@ -49,11 +52,8 @@ const searchProductForBuyer = async (keyword = '') => {
   return foundProducts
 }
 
-const findAllProductsForBuyer = async (
-  filter = {}, limit = 50, page = 1,
-  sort = 'ctime', select = ''
-) => {
-  return await productRepo.findAllProductsForBuyer(filter, limit, page, sort, select)
+const findAllProductsForBuyer = async ({ filter, selector, pagination, sorter }) => {
+  return await productRepo.findAllProductsForBuyer({ filter, selector, pagination, sorter })
 }
 
 const findProductForBuyer = async (productId = '', select = '') => {

@@ -1,25 +1,19 @@
 const productModel = require('../product/productModel')
+const { query } = require('../../helpers/mongooseHelper')
+const { addSelects } = require('../../helpers/mongooseHelper')
 
-const queryProduct = async(filter = {}, skip = 0, limit = 50) => {
-  return await productModel
-    .find(filter)
-    .populate({ path: 'shop', select: 'name -_id' })
-    .sort({ updatedAt: -1 })
-    .skip(skip)
-    .limit(limit)
-    .lean()
-}
+const populate = { path: 'shop', select: 'name -_id' }
 
 const findProductById = async (id) => {
   return await productModel.findById(id).lean()
 }
 
-const findAllDraftProductsForShop = async (filter, skip, limit) => {
-  return await queryProduct(filter, skip, limit)
+const findAllDraftProductsForShop = async ({ filter, selector, pagination, sorter }) => {
+  return await query(productModel, { filter, selector, pagination, sorter })
 }
 
-const findAllPublishedProductsForShop = async (filter, skip, limit) => {
-  return await queryProduct(filter, skip, limit)
+const findAllPublishedProductsForShop = async ({ filter, selector, pagination, sorter }) => {
+  return await query(productModel, { filter, selector, pagination, sorter })
 }
 
 const publishProductForShop = async (productId = '', shopId = '') => {
@@ -50,48 +44,35 @@ const unpublishProductForShop = async (productId = '', shopId = '') => {
   return unpublishProduct
 }
 
-const searchProductForBuyer = async (keyword = '') => {
+const searchProductForBuyer = async (keyword = '', { filter = {}, selector = '', pagination = {} }) => {
   const searchRegEx = new RegExp(keyword)
+  filter.isPublished = true
+  filter.$text = { $search: searchRegEx }
+
   const searchedProduct = await productModel
-    .find({
-      isPublished: true,
-      $text: { $search: searchRegEx }
-    }, {
+    .find(filter, {
       score: { $meta: 'textScore' }
     })
+    .populate(populate)
     .sort({
       score: { $meta: 'textScore' }
     })
-    .select('-score')
+    .skip(pagination.skip)
+    .limit(pagination.limit)
+    .select(selector)
     .lean()
 
   return searchedProduct
 }
 
-const findAllProductsForBuyer = async (
-  filter = { isPublished: true }, limit = 50,
-  page = 1, sort = 'ctime', select = ''
-) => {
-  if (!filter?.isPublished) filter.isPublished = true
-  const skip = (page - 1) * limit
-  const sortBy = sort === 'ctime' ? { _id: -1 } : { _id: 1 }
-
-  const products = await productModel
-    .find(filter)
-    .sort(sortBy)
-    .skip(skip)
-    .limit(limit)
-    .select(select)
-    .lean()
+const findAllProductsForBuyer = async ({ filter, selector, pagination, sorter }) => {
+  filter.isPublished = true
+  const products = await query(productModel, { populate, filter, selector, pagination, sorter })
   return products
 }
 
 const findProductForBuyer = async (productId = '', select = '') => {
-  const product = await productModel
-    .findById(productId)
-    .select(select)
-    .lean()
-  return product
+  return await productModel.findById(productId).select(select)
 }
 
 module.exports = {

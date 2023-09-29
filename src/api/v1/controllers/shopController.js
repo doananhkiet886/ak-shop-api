@@ -5,6 +5,7 @@ const { CreatedResponse } = require('../../../core/successResponse')
 const REQUEST_HEADERS = require('../utils/requestHeadersUtil')
 
 class ShopController {
+  // [POST] /api/v1/shops
   async createShop(req, res) {
     const userId = req.headers[REQUEST_HEADERS.CLIENT_ID]
     const { name } = req.body

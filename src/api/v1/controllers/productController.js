@@ -6,13 +6,7 @@ const { createFilterObjectFromQueryObject } = require('../helpers/mongooseHelper
 const requestHeaders = require('../utils/requestHeadersUtil')
 const { BadRequestError } = require('../../../core/errorResponse')
 class ProductController {
-  /**
-   * @desc create product
-   * @route [POST] /api/v1/products
-   * @param { Number } skip
-   * @param { Number } limit
-   * @returns { JSON }
-   */
+  // [POST] /api/v1/products
   async createProduct(req, res) {
     const shopId = req.headers[requestHeaders.SHOP_ID]
     const type = req.body.type
@@ -25,48 +19,35 @@ class ProductController {
     }).send(res)
   }
 
-  /**
-   * @desc get all draft products by shopId
-   * @route [GET] /api/v1/products/draft/all
-   * @param { String } shopId
-   * @param { Number } skip
-   * @param { Number } limit
-   * @returns { JSON }
-   */
+  // [GET] /api/v1/products/draft/all
   async getAllDraftProductsForShop(req, res) {
     const shopId = req.headers[requestHeaders.SHOP_ID]
     if (!shopId) new BadRequestError(`${requestHeaders.SHOP_ID} missing`)
 
+    const { filter, selector, pagination, sorter } = req
+    const options = { filter, selector, pagination, sorter }
+
     new SuccessResponse({
       message: 'Get all draft product successfully',
-      metadata: await productFactory.findAllDraftProductsForShop(shopId)
+      metadata: await productFactory.findAllDraftProductsForShop(shopId, options)
     }).send(res)
   }
 
-  /**
-   * @desc get all published products by shopId
-   * @route [GET] /api/v1/products/published/all
-   * @param { Number } skip
-   * @param { Number } limit
-   * @returns { JSON }
-   */
+  // [GET] /api/v1/products/published/all
   async getAllPublishedProductsForShop(req, res) {
     const shopId = req.headers[requestHeaders.SHOP_ID]
     if (!shopId) new BadRequestError(`${requestHeaders.SHOP_ID} missing`)
 
+    const { filter, selector, pagination, sorter } = req
+    const options = { filter, selector, pagination, sorter }
+
     new SuccessResponse({
       message: 'Get all published product successfully',
-      metadata: await productFactory.findAllPublishedProductsForShop(shopId)
+      metadata: await productFactory.findAllPublishedProductsForShop(shopId, options)
     }).send(res)
   }
 
-  /**
-   * @desc publish product by shopId
-   * @route [POST] /api/v1/products/publish/:id
-   * @param { String } productId
-   * @param { String } shopId
-   * @returns { JSON }
-   */
+  // [POST] /api/v1/products/publish/:id
   async publishProductForShop(req, res) {
     const shopId = req.headers[requestHeaders.SHOP_ID]
     const productId = req.params.id
@@ -78,13 +59,7 @@ class ProductController {
     }).send(res)
   }
 
-  /**
-   * @desc unpublish product by shopId
-   * @route [POST] /api/v1/products/unpublish/:id
-   * @param { String } productId
-   * @param { String } shopId
-   * @returns { JSON }
-   */
+  // [POST] /api/v1/products/unpublish/:id
   async unpublishProductForShop(req, res) {
     const shopId = req.headers[requestHeaders.SHOP_ID]
     const productId = req.params.id
@@ -96,15 +71,7 @@ class ProductController {
     }).send(res)
   }
 
-  /**
-   * @desc update product
-   * @route [PATCH] /api/v1/products//:id?type=
-   * @param { String } type
-   * @param { String } productId
-   * @param { String } shopId
-   * @param { Object } payload
-   * @returns { JSON }
-   */
+  // [PATCH] /api/v1/products//:id?type=
   async updateProduct(req, res) {
     const productId = req.params.id
     const type = req.query.type
@@ -120,51 +87,31 @@ class ProductController {
     }).send(res)
   }
 
-  /**
-   * @desc search product for buyer
-   * @route [GET] /api/v1/products/search/:keyword
-   * @param { String } keyword
-   * @returns { JSON }
-  */
+  // [GET] /api/v1/products/search/:keyword
   async searchProductForBuyer(req, res) {
     const { keyword } = req.params
+    const { filter, selector, pagination } = req
+    const options = { filter, selector, pagination }
 
     new SuccessResponse({
       message: 'Search product successfully',
-      metadata: await productFactory.searchProductForBuyer(keyword)
+      metadata: await productFactory.searchProductForBuyer(keyword, options)
     }).send(res)
   }
 
-  /**
-   * @desc get all products for buyer
-   * @route [GET] /api/v1/products?<filter_field>=&_limit=&_page=&_sort=&_select=
-   * @param { String } <filter_field>
-   * @param { Object } filter from <filter_fields>
-   * @param { Number } _limit
-   * @param { Number } _page
-   * @param { String } _sort
-   * @param { String } _select
-   * @returns { JSON }
- */
+
+  // [GET] /api/v1/products
   async getAllProductsForBuyer(req, res) {
-    const { _limit, _page, _sort, _select } = req.query
-    const filter = createFilterObjectFromQueryObject(req.query)
+    const { filter, selector, pagination, sorter } = req
+    const options = { filter, selector, pagination, sorter }
 
     new SuccessResponse({
       message: 'Get all products successfully',
-      metadata: await productFactory.findAllProductsForBuyer(
-        filter, _limit, _page, _sort, _select
-      )
+      metadata: await productFactory.findAllProductsForBuyer(options)
     }).send(res)
   }
 
-  /**
-   * @desc get product for buyer
-   * @route [GET] /api/v1/products/:id?_select=
-   * @param { String } id
-   * @param { String } _select
-   * @returns { JSON }
- */
+  // [GET] /api/v1/products/:id
   async getProductForBuyer(req, res) {
     const { id } = req.params
     const { _select } = req.query
