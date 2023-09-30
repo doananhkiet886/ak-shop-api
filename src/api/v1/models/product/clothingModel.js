@@ -4,21 +4,10 @@ const COLLECTION_NAME = 'clothes'
 const DOCUMENT_NAME = 'clothing'
 
 const clothingSchema = new Schema({
-  brand: {
-    type: String,
-    required: true
-  },
-  size: {
-    type: String
-  },
-  material: {
-    type: String
-  },
-  shop: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: 'shop'
-  }
+  brand: { type: String, required: true },
+  size: { type: String, default: null },
+  material: { type: String, default: null },
+  shop: { type: Schema.Types.ObjectId, required: true, ref: 'shop' }
 }, {
   timestamps: true,
   versionKey: false,
