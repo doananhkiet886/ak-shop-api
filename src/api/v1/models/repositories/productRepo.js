@@ -1,3 +1,5 @@
+'use strict'
+
 const productModel = require('../product/productModel')
 const { query } = require('../../helpers/mongooseHelper')
 

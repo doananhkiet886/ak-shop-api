@@ -1,3 +1,5 @@
+'use strict'
+
 const inventoryModel = require('../inventoryModel')
 
 const insertInventory = async ({ shop, product, location, stock }) => {

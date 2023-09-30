@@ -1,3 +1,5 @@
+'use strict'
+
 const express = require('express')
 const { authenticate } = require('../../middlewares/authMiddleware')
 const shopController = require('../../controllers/shopController')

@@ -1,3 +1,5 @@
+'use strict'
+
 const clothingModel = require('../../models/product/clothingModel')
 const ProductService = require('./productService')
 const { findOneAndUpdateFewFields } = require('../../helpers/mongooseHelper')

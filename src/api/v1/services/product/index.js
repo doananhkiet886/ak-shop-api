@@ -1,3 +1,5 @@
+'use strict'
+
 const productTypes = require('./productTypes')
 const productRepo = require('../..//models/repositories/productRepo')
 const { BadRequestError, NotFoundError } = require('../../../../core/errorResponse')

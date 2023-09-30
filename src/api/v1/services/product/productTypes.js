@@ -1,3 +1,5 @@
+'use strict'
+
 const ElectronicService = require('./electronicService')
 const ClothingService = require('./clothingService')
 

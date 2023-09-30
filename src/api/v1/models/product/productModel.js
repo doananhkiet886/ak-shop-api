@@ -1,3 +1,5 @@
+'use strict'
+
 const { model, Schema } = require('mongoose')
 const slugify = require('slugify')
 
