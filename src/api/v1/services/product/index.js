@@ -12,10 +12,10 @@ productTypes.forEach(({ type, productClass }) => {
   registerProductType(type, productClass)
 })
 
-const createProduct = async (shopId = '', type = '', payload = {}) => {
+const createProduct = async (type = '', payload = {}) => {
   const productClass = productRegister[type]
   if (!productClass) throw new BadRequestError('Invalid product type')
-  return await new productClass(payload).createProduct(shopId)
+  return await new productClass(payload).createProduct()
 }
 
 const findAllDraftProductsForShop = async (shopId = '', { filter, selector, pagination, sorter }) => {

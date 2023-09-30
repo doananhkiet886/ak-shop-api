@@ -9,12 +9,12 @@ class ProductController {
   async createProduct(req, res) {
     const shopId = req.headers[requestHeaders.SHOP_ID]
     const type = req.body.type
-    const payload = req.body
+    const payload = { ...req.body, shopId, type }
     if (!shopId || !type) new BadRequestError(`${requestHeaders.SHOP_ID} or Type missing`)
 
     new CreatedResponse({
       message: 'Create product successfully',
-      metadata: await productFactory.createProduct(shopId, type, payload)
+      metadata: await productFactory.createProduct(type, payload)
     }).send(res)
   }
 

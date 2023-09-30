@@ -1,13 +1,14 @@
 'use strict'
 
 const productModel = require('../../models/product/productModel')
+const inventoryRepo = require('../../models/repositories/inventoryRepo')
 const { findOneAndUpdateFewFields } = require('../../helpers/mongooseHelper')
 
 class ProductService {
 
   constructor({
     name, thumb, description, price,
-    quantity, type, shop, attributes
+    quantity, type, shopId, attributes
   }) {
     this.name = name
     this.thumb = thumb
@@ -15,16 +16,24 @@ class ProductService {
     this.price = price
     this.quantity = quantity
     this.type = type
-    this.shop = shop
+    this.shopId = shopId
     this.attributes = attributes
   }
 
-  async createProduct(shopId = '', productId = '') {
-    return await productModel.create({
+  async createProduct(productId = '') {
+    const newProduct = await productModel.create({
       ...this,
-      _id: productId,
-      shop: shopId
+      shop: this.shopId,
+      _id: productId
     })
+    if (newProduct) {
+      await inventoryRepo.insertInventory({
+        shop: this.shopId,
+        product: newProduct._id,
+        stock: this.quantity
+      })
+    }
+    return newProduct
   }
 
   async updateProduct(productId = '', shopId = '') {

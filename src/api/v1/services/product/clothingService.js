@@ -3,10 +3,10 @@ const ProductService = require('./productService')
 const { findOneAndUpdateFewFields } = require('../../helpers/mongooseHelper')
 const { BadRequestError } = require('../../../../core/errorResponse')
 class ClothingService extends ProductService {
-  async createProduct(shopId = '') {
+  async createProduct() {
     const newClothing = await clothingModel.create({
       ...this.attributes,
-      shop: shopId
+      shop: this.shopId
     })
     if (!newClothing) throw new BadRequestError('Create clothing failure')
 
