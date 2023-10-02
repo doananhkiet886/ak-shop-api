@@ -17,7 +17,7 @@ const discountSchema = new Schema({
   usesCount: { type: Number, default: 0 },
   userUsed: { type: Array, default: [] },
   maxUsesPerUser: { type: Number, required: true },
-  minOrderValue: { type: Number, required: true },
+  minOrderValue: { type: Number, default: 0 },
   shop: { type: Schema.Types.ObjectId, required: true, ref: 'shop' },
   isActive: { type: Boolean, default: true },
   appliesTo: { type: String, required: true, enum: ['all', 'specific'] },

@@ -6,6 +6,7 @@ const errorAsyncHandler = require('../../../core/errorAsyncHandler')
 const accessRouter = require('./access')
 const shopRouter = require('./shop')
 const productRouter = require('./product')
+const discountRouter = require('./discount')
 
 const router = express.Router()
 
@@ -15,5 +16,6 @@ router.use(errorAsyncHandler(checkPermission('0000')))
 router.use('/access', accessRouter)
 router.use('/shops', shopRouter)
 router.use('/products', productRouter)
+router.use('/discounts', discountRouter)
 
 module.exports = router
