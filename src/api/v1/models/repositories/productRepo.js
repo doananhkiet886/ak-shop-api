@@ -3,10 +3,14 @@
 const productModel = require('../product/productModel')
 const { query } = require('../../helpers/mongooseHelper')
 
-const populate = { path: 'shop', select: 'name -_id' }
+const populate = { path: 'shop', select: 'name' }
 
 const findProductById = async (id) => {
   return await productModel.findById(id).lean()
+}
+
+const findProduct = async (filter = {}) => {
+  return await productModel.findOne(filter).lean()
 }
 
 const findAllDraftProductsForShop = async ({ filter, selector, pagination, sorter }) => {
@@ -78,6 +82,7 @@ const findProductForBuyer = async (productId = '', select = '') => {
 
 module.exports = {
   findProductById,
+  findProduct,
   findAllDraftProductsForShop,
   findAllPublishedProductsForShop,
   publishProductForShop,

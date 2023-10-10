@@ -1,6 +1,8 @@
 'use strict'
 
 const userModel = require('../models/userModel')
+const cartService = require('../services/cartService')
+
 
 class UserService {
   static async findByUsername(username = '') {
@@ -18,10 +20,14 @@ class UserService {
       email, username, password
     } = requestBody
 
-    return await userModel.create({
+    const newUser = await userModel.create({
       lastName, firstName, gender, dateOfBirth,
       address, phoneNumber, email, account: { username, password }
     })
+
+    cartService.createCart(newUser._id)
+
+    return newUser
   }
 }
 

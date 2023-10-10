@@ -44,33 +44,33 @@ class AuthMiddleware {
     const foundKeyToken = await keyTokenService.findByUserId(userId)
     if (!foundKeyToken) throw new UnAuthorizedError()
 
-    const refreshToken = req.headers[REQUEST_HEADERS.REFRESH_TOKEN]
-    if (refreshToken) {
-      try {
-        const decodedUser = verifyToken(refreshToken, foundKeyToken.publicKey)
+    // const refreshToken = req.headers[REQUEST_HEADERS.REFRESH_TOKEN]
+    // if (refreshToken) {
+    //   try {
+    //     const decodedUser = verifyToken(refreshToken, foundKeyToken.publicKey)
 
-        if (userId !== decodedUser.userId)
-          throw new UnAuthorizedError('Invalid user id')
+    //     if (userId !== decodedUser.userId)
+    //       throw new UnAuthorizedError('Invalid user id')
 
-        const isUsedRefreshToken =
-          foundKeyToken?.refreshTokensUsed.includes(refreshToken)
-        if (isUsedRefreshToken) {
-          await keyTokenService.deleteByUserId(decodedUser.userId)
-          throw new ForbiddenError('Something happened')
-        }
+    //     const isUsedRefreshToken =
+    //       foundKeyToken?.refreshTokensUsed.includes(refreshToken)
+    //     if (isUsedRefreshToken) {
+    //       await keyTokenService.deleteByUserId(decodedUser.userId)
+    //       throw new ForbiddenError('Something happened')
+    //     }
 
-        const isValidRefreshToken = foundKeyToken.refreshToken === refreshToken
-        if (!isValidRefreshToken)
-          throw new UnAuthorizedError(`Invalid ${REQUEST_HEADERS.REFRESH_TOKEN}`)
+    //     const isValidRefreshToken = foundKeyToken.refreshToken === refreshToken
+    //     if (!isValidRefreshToken)
+    //       throw new UnAuthorizedError(`Invalid ${REQUEST_HEADERS.REFRESH_TOKEN}`)
 
-        req.keyToken = foundKeyToken
-        req.user = decodedUser
-        req.refreshToken = refreshToken
-        return next()
-      } catch (error) {
-        throw new UnAuthorizedError(`Invalid ${REQUEST_HEADERS.REFRESH_TOKEN}`)
-      }
-    }
+    //     req.keyToken = foundKeyToken
+    //     req.user = decodedUser
+    //     req.refreshToken = refreshToken
+    //     return next()
+    //   } catch (error) {
+    //     throw new UnAuthorizedError(`Invalid ${REQUEST_HEADERS.REFRESH_TOKEN}`)
+    //   }
+    // }
 
     const accessToken = req.headers[REQUEST_HEADERS.AUTHORIZATION]
     if (!accessToken)
@@ -89,8 +89,10 @@ class AuthMiddleware {
       return next()
     } catch (error) {
       const isExpiredToken = error.name === 'TokenExpiredError'
-      if (isExpiredToken)
+      if (isExpiredToken) {
         throw new UnAuthorizedError(`Expired ${REQUEST_HEADERS.AUTHORIZATION}`)
+      }
+      throw new UnAuthorizedError(`Invalid ${REQUEST_HEADERS.AUTHORIZATION}`)
     }
   }
 }
