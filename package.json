@@ -22,7 +22,8 @@
     "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
-    "mongoose": "^7.5.0"
+    "mongoose": "^7.5.0",
+    "slugify": "^1.6.6"
   },
   "devDependencies": {
     "eslint": "^8.49.0",

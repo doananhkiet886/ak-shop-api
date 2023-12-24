@@ -1,22 +1,36 @@
 'use strict'
 
-const { NODE_ENV_DEVELOPMENT, NODE_ENV_PRODUCTION, MONGODB_URI_DEFAULT } = require('./constants.config')
+const mongoose = require('mongoose')
+const { NODE_ENV_DEVELOPMENT } = require('../configs/constantsConfig')
+const { env, db: { host, port, name } } = require('./environmentConfig')
 
-const development = {
-  mongodbUri: process.env.MONGODB_URI || MONGODB_URI_DEFAULT
+const mongodbUri = `mongodb://${host}:${port}/${name}`
+
+class Database {
+  constructor() {
+
+  }
+
+  connect() {
+    mongoose
+      .connect(mongodbUri)
+      .then(() => console.log('Connect to MongoDB successfully'))
+      .catch(() => console.log('Connect to MongoDB failure'))
+
+    if (env === NODE_ENV_DEVELOPMENT) {
+      mongoose.set('debug', true)
+      mongoose.set('debug', { color: true })
+    }
+  }
+
+  static getInstance() {
+    if (!Database.instance) {
+      Database.instance = new Database()
+    }
+    return Database.instance
+  }
 }
 
-const production = {
-  mongodbUri: process.env.MONGODB_URI || MONGODB_URI_DEFAULT
-}
+const instanceDB = Database.getInstance()
 
-const dbConfig = {
-  development,
-  production
-}
-
-let env = process.env.NODE_ENV
-const isValidEnv = env === NODE_ENV_DEVELOPMENT || env === NODE_ENV_PRODUCTION
-if (!isValidEnv) env = NODE_ENV_DEVELOPMENT
-
-module.exports = dbConfig[env]
+module.exports = instanceDB

@@ -1,8 +1,8 @@
 'use strict'
 
 const app = require('./src/app')
-const { port } = require('./src/configs/environment.config')
+const { app: { host, port } } = require('./src/configs/environmentConfig')
 
-app.listen(port, () => {
-  console.log('Server is running with port:', port)
+app.listen(port, host, () => {
+  console.log(`Server is running at: http://${host}:${port}`)
 })

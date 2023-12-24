@@ -1,17 +1,17 @@
 'use strict'
 
-require('dotenv').config()
 const express = require('express')
 const { default: helmet } = require('helmet')
 const compression = require('compression')
 const morgan = require('morgan')
-const db = require('./dbs')
+const database = require('./configs/database.config')
 const router = require('./routes')
+const { StatusCodes, ReasonPhrases } = require('./core/httpStatusCode')
 
 const app = express()
 
 // init db
-db.connect()
+database.connect()
 
 // init middlewares
 app.use(express.urlencoded({ extended: true }))
@@ -24,12 +24,16 @@ app.use(morgan('dev'))
 app.use(router)
 
 // handling error
+// eslint-disable-next-line no-unused-vars
 app.use((error, req, res, next) => {
-  const { statusCode, message } = error
-  res.json({
-    status: 'error',
+  const statusCode = error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR
+  const message = error.message || ReasonPhrases.INTERNAL_SERVER_ERROR
+
+  res.status(statusCode).json({
+    status: 'Error',
     code: statusCode,
-    message
+    message,
+    stack: error.stack
   })
 })
 
