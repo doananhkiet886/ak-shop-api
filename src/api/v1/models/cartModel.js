@@ -26,8 +26,8 @@ const cartSchema = new Schema({
   },
   products: [{
     _id: false,
-    shopId: { type: Schema.ObjectId, ref: 'shop', required: true},
-    productId: { type: Schema.ObjectId, ref: 'product', required: true},
+    shopId: { type: Schema.ObjectId, ref: 'shop', required: true },
+    productId: { type: Schema.ObjectId, ref: 'product', required: true },
     quantity: { type: Number, required: true }
   }],
   countProducts: {

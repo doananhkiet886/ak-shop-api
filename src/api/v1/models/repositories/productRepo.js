@@ -80,6 +80,19 @@ const findProductForBuyer = async (productId = '', select = '') => {
   return await productModel.findById(productId).select(select)
 }
 
+const checkProductsAvailable = async (products) => {
+  return await Promise.all(products.map(async (product) => {
+    const foundProduct = await findProductById(product.productId)
+    if (foundProduct) {
+      return {
+        price: foundProduct.price,
+        quantity: product.quantity,
+        productId: product.productId
+      }
+    }
+  }))
+}
+
 module.exports = {
   findProductById,
   findProduct,
@@ -89,5 +102,6 @@ module.exports = {
   unpublishProductForShop,
   searchProductForBuyer,
   findAllProductsForBuyer,
-  findProductForBuyer
+  findProductForBuyer,
+  checkProductsAvailable
 }

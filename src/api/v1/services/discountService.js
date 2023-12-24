@@ -115,24 +115,24 @@ class DiscountService {
       throw new NotFoundError('Discount code has expired')
     }
 
-    let totalOrder = 0
+    let totalPriceDiscountedProducts = 0
     switch (appliesTo) {
     case 'all':
-      totalOrder = products.reduce((acc, { quality, price }) => {
+      totalPriceDiscountedProducts = products.reduce((acc, { quality, price }) => {
         return acc + quality * price
       }, 0)
       break
     case 'specific':
-      totalOrder = products.reduce((acc, { id, quality, price }) => {
-        return productIds.includes(id) ? acc + quality * price : acc
+      totalPriceDiscountedProducts = products.reduce((acc, { productId, quantity, price }) => {
+        return productIds.includes(productId) ? acc + quantity * price : acc
       }, 0)
-      if (totalOrder === 0) throw new BadRequestError('No products are discounted')
+      if (totalPriceDiscountedProducts === 0) throw new BadRequestError('No products are discounted')
       break
     default:
       throw new InternalServerError('Something is wrong with the discount code')
     }
 
-    if (totalOrder < minOrderValue) {
+    if (totalPriceDiscountedProducts < minOrderValue) {
       throw new BadRequestError(`Discount requires a minimum order value of ${minOrderValue}`)
     }
 
@@ -144,16 +144,15 @@ class DiscountService {
       discountAmount = value
       break
     case 'percentage':
-      discountAmount = totalOrder * (value / 100)
+      discountAmount = totalPriceDiscountedProducts * (value / 100)
       break
     default:
       throw new InternalServerError('Something is wrong with the discount code')
     }
 
     return {
-      totalOrder,
-      discountAmount,
-      totalPrice: totalOrder - discountAmount
+      totalPriceDiscountedProducts,
+      discountAmount
     }
   }
 }

@@ -8,6 +8,8 @@ const shopRouter = require('./shop')
 const productRouter = require('./product')
 const discountRouter = require('./discount')
 const cartRouter = require('./cart')
+const checkoutRouter = require('./checkout')
+const inventoryRouter = require('./inventory')
 
 const router = express.Router()
 
@@ -19,5 +21,7 @@ router.use('/shops', shopRouter)
 router.use('/products', productRouter)
 router.use('/discounts', discountRouter)
 router.use('/carts', cartRouter)
+router.use('/checkout', checkoutRouter)
+router.use('/inventory', inventoryRouter)
 
 module.exports = router

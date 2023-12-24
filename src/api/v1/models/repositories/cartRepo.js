@@ -1,5 +1,17 @@
 const cartModel = require('../../models/cartModel')
 
+
+const findCartByCartIdUserId = async ({ cartId, userId }) => {
+  return await cartModel.findOne({
+    _id: cartId,
+    user: userId
+  }).lean()
+}
+
+const findCartById = async (id = '') => {
+  return await cartModel.findOne({ _id: id }).lean()
+}
+
 const findCartByUserId = async (userId) => {
   return await cartModel.findOne({
     user: userId
@@ -27,6 +39,8 @@ const findOneAndUpdate = async (filter = {}, update = {}) => {
 }
 
 module.exports = {
+  findCartByCartIdUserId,
+  findCartById,
   findCartByUserId,
   findProductInCartActive,
   findOneAndUpdate
